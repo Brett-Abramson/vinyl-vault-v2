@@ -5,7 +5,7 @@ from .models import User, Album, Track, Comment
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "email", "password",
+        fields = ("id", "username", "email",
                   "spotify_ID", "albums", "favorite_genres")
 
 
@@ -13,7 +13,7 @@ class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
         fields = ("id", "artist_name", "title", "release_date",
-                  "artwork",  "length", "spotify_ID")
+                  "artwork",  "length", "spotify_id")
 
 
 class TrackSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class TrackSerializer(serializers.ModelSerializer):
                   "order_num", "musicians", "user_notes")
 
 
-class AlbumSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ("user", "album", "track", "is_private", "subject_heading",
