@@ -9,18 +9,20 @@ class UserSerializer(serializers.ModelSerializer):
                   "spotify_ID", "albums", "favorite_genres")
 
 
-class AlbumSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Album
-        fields = ("id", "artist_name", "title", "release_date",
-                  "artwork",  "length", "spotify_id")
-
-
 class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track
         fields = ("album", "track_name", "length",
                   "order_num", "musicians", "user_notes")
+        
+
+class AlbumSerializer(serializers.ModelSerializer):
+    tracks = TrackSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Album
+        fields = ("id", "artist_name", "title", "tracks",
+                  "release_date", "artwork", "length", "spotify_id")
 
 
 class CommentSerializer(serializers.ModelSerializer):

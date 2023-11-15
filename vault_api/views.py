@@ -22,3 +22,5 @@ class AlbumList(generics.ListCreateAPIView):
 class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Album.objects.all().order_by("id")
     serializer_class = AlbumSerializer
+
+

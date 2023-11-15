@@ -53,6 +53,10 @@ class Track(models.Model):
     musicians = models.CharField(max_length=200, blank=True)
     user_notes = models.TextField(blank=True)
 
+    class Meta:
+        unique_together = ["album", "order_num"]
+        ordering = ["order_num"]
+
     def __str__(self):
         return f"{self.track_name} (Track {self.order_num} of {self.album.title})"
 
