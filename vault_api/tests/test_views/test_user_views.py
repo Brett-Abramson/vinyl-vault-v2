@@ -87,3 +87,64 @@ class UserListTest(APITestCase):
 
         # check that the user object was not created
         self.assertEqual(User.objects.count(), user_count_before)
+
+
+class UserDetailTest(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # create test users
+        cls.user = User.objects.create(username="testuser1", email="user1@example.com",
+                                       password=make_password("password1"), spotify_id="123", favorite_genres="Rock")
+
+    def test_get_user(self):
+        url = reverse("user_detail", kwargs={"pk": self.user.pk})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["id"], self.user.pk)
+
+
+class UserUpdateTest(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # create test users
+        cls.user = User.objects.create(username="testuser1", email="user1@example.com",
+                                       password=make_password("password1"), spotify_id="123", favorite_genres="Rock")
+
+    def test_update_user(self):
+        url = reverse("user_detail", kwargs={"pk": self.user.pk})
+        updated_data = {
+            "username": "testUser",
+            "email": "testing@test.com",
+            "password": "password2",
+            "spotify_id": "abcdef",
+            "favorite_genres": "Ska"
+        }
+        response = self.client.put(url, updated_data, format="json")
+        self.user.refresh_from_db()
+
+        # print(response.data) django's default user model handling the password, this will be updated with Auth anyhow
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.user.username, updated_data["username"])
+        self.assertEqual(self.user.email, updated_data["email"])
+        # self.assertTrue(self.user.check_password("password2"))
+        self.assertEqual(self.user.spotify_id, updated_data["spotify_id"])
+        self.assertEqual(self.user.favorite_genres,
+                         updated_data["favorite_genres"])
+
+
+class UserDeleteTest(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # create test users
+        cls.user = User.objects.create(username="testuser1", email="user1@example.com",
+                                       password=make_password("password1"), spotify_id="123", favorite_genres="Rock")
+
+    def test_delete_user(self):
+        user_count_before_delete = User.objects.count()
+        url = reverse("user_detail", kwargs={"pk": self.user.pk})
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(User.objects.count(), user_count_before_delete - 1)
+        self.assertFalse(User.objects.filter(pk=self.user.pk).exists())
