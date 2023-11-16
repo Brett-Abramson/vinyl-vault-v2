@@ -33,8 +33,8 @@ class User(AbstractUser):
 class Album(models.Model):
     artist_name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
-    release_date = models.DateField()
-    artwork = models.URLField(max_length=200)
+    release_date = models.DateField(blank=True)
+    artwork = models.URLField(max_length=200, blank=True)
     length = models.DurationField()
     spotify_id = models.CharField(
         max_length=100, unique=True, blank=True, null=True)

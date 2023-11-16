@@ -1,13 +1,12 @@
-from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth.hashers import make_password
 
-from vault_api.models import User, Album
+from vault_api.models import User
 
 
-class UserListTest(TestCase):
+class UserListTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
         # create test users
