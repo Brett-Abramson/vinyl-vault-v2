@@ -76,3 +76,20 @@ class AlbumUpdateTest(APITestCase):
         self.assertEqual(self.album.artwork, updated_data["artwork"])
         self.assertEqual(self.album.length, expected_length)
         self.assertEqual(self.album.spotify_id, updated_data["spotify_id"])
+
+
+class AlbumDeleteTest(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # create test albums
+        cls.album = Album.objects.create(artist_name="artist1", title="album1", release_date=date.today(
+        ), artwork="http://url1.com", length="00:04:20", spotify_id="abc123")
+
+    def test_delete_album(self):
+        album_count_before_delete = Album.objects.count()
+        url = reverse("album_detail", kwargs={"pk": self.album.pk})
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Album.objects.count(), album_count_before_delete - 1)
+        self.assertFalse(Album.objects.filter(pk=self.album.pk).exists())
