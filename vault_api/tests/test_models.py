@@ -2,14 +2,14 @@ from django.test import TestCase
 
 from vault_api.models import Album, User, Track, Comment
 from datetime import date, timedelta
-# from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import Group, Permission
 
 # testing two different testing styles
 
 
 class UserModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUp(cls):
         User.objects.create(username="testuser", email="test@example.com",
                             spotify_id="12345", favorite_genres="Blues, Jazz")
 
@@ -57,7 +57,7 @@ class UserModelTest(TestCase):
 # and this one
 class AlbumModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUp(cls):
         Album.objects.create(artist_name="Test Artist", title="Test Album", release_date=date.today(
         ), artwork="http://testurl.com", length="00:04:20", spotify_id="123456")
 
@@ -94,7 +94,7 @@ class AlbumModelTest(TestCase):
 # testing creation of tracks, ensuring relationshsip with albums and custom "__str__" method
 class TrackModelTest(TestCase):
     @classmethod
-    def setUpTestData(self):
+    def setUp(self):
         test_album = Album.objects.create(
             artist_name="Test Artist", title="Test Album", release_date=date.today(
             ), length="00:04:20")
@@ -120,7 +120,7 @@ class TrackModelTest(TestCase):
 # testing creation of comments and the relationships with users, albums, and tracks
 class CommentModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUp(cls):
         test_user = User.objects.create(username="Test User", email="testing@example.com",
                                         password="123456", spotify_id="12345", favorite_genres="Blues, Jazz")
         test_album = Album.objects.create(artist_name="Test Artist", title="Test Album", release_date=date.today(
@@ -129,7 +129,7 @@ class CommentModelTest(TestCase):
                                           order_num=1, musicians="Test Player One, Test Player Two", user_notes="Test Notes")
 
         Comment.objects.create(
-            id=1, user=test_user, album=test_album, track=test_track, subject_heading="Test heading", comment_section="Test comment")
+            user=test_user, album=test_album, track=test_track, subject_heading="Test heading", comment_section="Test comment")
 
     def test_comment_creation(self):
         comment = Comment.objects.get(id=1)
