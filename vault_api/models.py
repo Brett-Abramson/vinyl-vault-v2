@@ -5,7 +5,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    spotify_ID = models.CharField(max_length=200, blank=True, null=True)
+    spotify_id = models.CharField(max_length=200, blank=True, null=True)
     albums = models.ManyToManyField("Album", blank=True)
     favorite_genres = models.CharField(max_length=200, blank=True)
 
@@ -50,8 +50,11 @@ class Track(models.Model):
     track_name = models.CharField(max_length=100)
     length = models.DurationField()
     order_num = models.PositiveIntegerField()
+
     musicians = models.CharField(max_length=200, blank=True)
     user_notes = models.TextField(blank=True)
+    spotify_id = models.CharField(
+        max_length=100, unique=True, blank=True, null=True)
 
     class Meta:
         unique_together = ["album", "order_num"]
