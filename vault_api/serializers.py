@@ -23,7 +23,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ("user", "album", "track", "is_private", "subject_heading",
-                  "comment_section", "date_posted", "date_updated")
+                  "comment_section", "created_on", "updated_at")
 
 
 class UserSerializer(serializers.ModelSerializer):

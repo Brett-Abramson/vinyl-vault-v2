@@ -138,3 +138,10 @@ class CommentModelTest(TestCase):
         self.assertEqual(comment.album.title, "Test Album")
         self.assertEqual(comment.track.track_name, "Test Track One")
         self.assertEqual(comment.comment_section, "Test comment")
+
+    def test_comment_without_album_and_track(self):
+        test_user = User.objects.get(username="Test User")
+        comment = Comment.objects.create(
+            user=test_user, comment_section="Test comment without album/track")
+        self.assertIsNone(comment.album)
+        self.assertIsNone(comment.track)
