@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INSTALLED_APPS = [
     'vault_api',
     'rest_framework',
+    # 'rest_framework-simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -112,6 +113,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# SimpleJWT Configuration
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+REST_FRAMWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
+  )
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
