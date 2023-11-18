@@ -26,6 +26,7 @@ class User(AbstractUser):
         related_query_name="user"
     )
 
+
     def __str__(self):
         return self.username
 

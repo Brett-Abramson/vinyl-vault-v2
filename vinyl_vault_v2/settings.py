@@ -10,34 +10,45 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 
 import os
-import environ
+from os import getenv, path
+from pathlib import Path
+from django.core.management.utils import get_random_secret_key
+import dotenv
+# import environ
 
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Initialise environment variables
+# env = environ.Env()
+# environ.Env.read_env()
+dotenv_file = BASE_DIR / '.env.local'
+
+# Helps seperate development from production - file won't exist
+if path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# prevents Debug == True in production
+DEBUG = getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = getenv('DJANGO_ALLOWED_HOSTS',
+                       'localhost, 127.0.0.1').split(",")
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'djoser',
     'vault_api',
     'rest_framework',
     'django.contrib.admin',
@@ -85,10 +96,10 @@ WSGI_APPLICATION = 'vinyl_vault_v2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST', default='localhost'),
+        'NAME': getenv('DATABASE_NAME'),
+        'USER': getenv('DATABASE_USER'),
+        'PASSWORD': getenv('DATABASE_PASSWORD'),
+        'HOST': getenv('DATABASE_HOST', default='localhost'),
         'PORT': '5432',
     }
 }
@@ -112,13 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# SimpleJWT Configuration
-# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -136,6 +140,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# SimpleJWT Configuration
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'password-reset/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'activation/{uid}/{token}',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'TOKEN_MODEL': None,
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
