@@ -8,6 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
+
 class JWTAuthenticationTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
@@ -21,10 +22,11 @@ class JWTAuthenticationTest(APITestCase):
 
         assert response.status_code == status.HTTP_201_CREATED
         assert len(mail.outbox) == 1
-        
+
         # activate user
         activation_email = mail.outbox[0]
-        activation_url = re.search(r"http://testserver/activation/\S+", activation_email.body).group()
+        activation_url = re.search(
+            r"http://testserver/activation/\S+", activation_email.body).group()
         _, uid, token = activation_url.split("/")[-3:]
 
         response = cls.client_instance.post(reverse("user-activation"), {
@@ -36,15 +38,77 @@ class JWTAuthenticationTest(APITestCase):
 
         # store user for further testing
         cls.user = User.objects.get(email="test@example.com")
+
+        # log in and store token
+        login_url = reverse("jwt-create")
+        login_response = cls.client_instance.post(
+            login_url, {"username": "newtestuser", "password": "testpassword123"}, format="json")
+
+        assert login_response.status_code == status.HTTP_200_OK
+        cls.access_token = login_response.data["access"]
+        cls.refresh_token = login_response.data["refresh"]
+
+    def test_jwt_verify(self):
+        url = reverse("jwt-verify")
+        response = self.client.post(
+            url, {"token": self.access_token}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_jwt_verify_bad_token(self):
+        url = reverse("jwt-verify")
+        response = self.client.post(
+            url,  {"token": self.access_token + "1"}, format="json")
+
+        # print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data["detail"],
+                         "Token is invalid or expired")
+
+    def test_jwt_refresh(self):
+        url = reverse("jwt-refresh")
+        response = self.client.post(
+            url, {"refresh": self.refresh_token}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("access" in response.data)
+
+    def test_jwt_refresh_bad_token(self):
+        url = reverse("jwt-refresh")
+        response = self.client.post(
+            url, {"refresh": self.refresh_token + "1"}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data["detail"],
+                         "Token is invalid or expired")
+
+    def test_get_user(self):
+        url = reverse("user-me")
+        response = self.client.get(
+            url, HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data["email"], "test@example.com")
+
+    def test_update_user(self):
+        url = reverse("user-me")
+        updated_data = {
+            # "username": "updatedUser",
+            "email": "updatedemail@example.com",
+            "first_name": "John"
+        }
+
+        response = self.client.put(
+            url, updated_data, format="json", HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
         
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_user_log_in(self):
-        url = reverse("jwt-create")
-        response = self.client.post(url, {"username": "newtestuser", "password": "testpassword123"}, format="json")
-
-        self.assertTrue(response.status_code, status.HTTP_200_OK)
         print(response.data)
 
+        user = User.objects.get(username="newtestuser")
+        self.assertEqual(user.email, "updatedemail@example.com")
+        self.assertEqual(user.first_name, "John")
 
     # def test_access_protected_endpoint_with_token(self):
     #     # obtain JWT token
