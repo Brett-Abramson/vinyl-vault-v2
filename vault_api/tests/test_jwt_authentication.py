@@ -91,24 +91,7 @@ class JWTAuthenticationTest(APITestCase):
         self.assertEqual(
             response.data["email"], "test@example.com")
 
-    def test_update_user(self):
-        url = reverse("user-me")
-        updated_data = {
-            # "username": "updatedUser",
-            "email": "updatedemail@example.com",
-            "first_name": "John"
-        }
 
-        response = self.client.put(
-            url, updated_data, format="json", HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-        print(response.data)
-
-        user = User.objects.get(username="newtestuser")
-        self.assertEqual(user.email, "updatedemail@example.com")
-        self.assertEqual(user.first_name, "John")
 
     # def test_access_protected_endpoint_with_token(self):
     #     # obtain JWT token

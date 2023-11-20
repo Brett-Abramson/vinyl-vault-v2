@@ -25,7 +25,6 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
-    spotify_id = models.CharField(max_length=200, blank=True, null=True)
     albums = models.ManyToManyField("Album", blank=True)
     favorite_genres = models.CharField(max_length=200, blank=True)
 
@@ -51,6 +50,24 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class SpotifyProfile(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="spotify_profile")
+    spotify_id = models.CharField(max_length=200, blank=True, null=True)
+    access_token = models.TextField(blank=True, null=True)
+    refresh_token = models.TextField(blank=True, null=True)
+    token_expires = models.DateTimeField(blank=True, null=True)
+    scope = models.TextField(blank=True, null=True)
+    profile_link = models.URLField(max_length=500, blank=True, null=True)
+
+    profile_pic_url = models.URLField(max_length=500, blank=True, null=True)
+    profile_pic_height = models.IntegerField(blank=True, null=True)
+    profile_pic_width = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Spotify Profile for {self.user.username}"
 
 
 class Album(models.Model):
