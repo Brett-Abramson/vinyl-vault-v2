@@ -91,7 +91,33 @@ class JWTAuthenticationTest(APITestCase):
         self.assertEqual(
             response.data["email"], "test@example.com")
 
+    def test_password_reset(self):
+        url = reverse("user-reset-password")
+        response = self.client.post(url, {"email": "test@example.com"})
 
+        self.assertEqual(len(mail.outbox), 1)
+
+        # extract uid and token from email
+        email_body = mail.outbox[0].body
+        password_reset_url = re.search(
+            r"http://testserver/password-reset/(\S+)/(\S+)", email_body)
+        if password_reset_url:
+            uid, token = password_reset_url.groups()
+        else:
+            self.fail("Password reset URL not found in the email body")
+
+        # confirm password reset
+        new_password = "newtestpassword123"
+        url = reverse("user-reset-password-confirm")
+        response = self.client.post(url, {
+            "uid": uid, "token": token, "new_password": new_password, "re_new_password": new_password
+        })
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        # check if user can login with new password
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password(new_password))
 
     # def test_access_protected_endpoint_with_token(self):
     #     # obtain JWT token
