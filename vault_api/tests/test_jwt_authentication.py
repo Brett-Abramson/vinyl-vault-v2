@@ -87,6 +87,7 @@ class JWTAuthenticationTest(APITestCase):
         response = self.client.get(
             url, HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
 
+        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
             response.data["email"], "test@example.com")
@@ -118,6 +119,33 @@ class JWTAuthenticationTest(APITestCase):
         # check if user can login with new password
         self.user.refresh_from_db()
         self.assertTrue(self.user.check_password(new_password))
+
+    def test_user_deletion(self):
+        url = reverse("user-me")
+        response = self.client.delete(
+            url, {"current_password": "testpassword123"}, HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
+
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(User.DoesNotExist):
+            User.objects.get(username="newtestuser")
+
+    def test_update_user(self):
+        url = reverse("user-me")
+        updated_data = {
+            "email": "newTestEmail@example.com",
+            # "first_name": "John",
+        }
+        response = self.client.patch(
+            url, updated_data, HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
+
+        print(response.data)
+        self.user.refresh_from_db()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data["email"], "newTestEmail@example.com")
+        # self.assertEqual(
+        #     self.user.first_name, "John")
 
     # def test_access_protected_endpoint_with_token(self):
     #     # obtain JWT token
