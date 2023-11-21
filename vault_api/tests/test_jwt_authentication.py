@@ -52,7 +52,7 @@ class JWTAuthenticationTest(APITestCase):
         cls.user = User.objects.get(email="test@example.com")
 
     def test_jwt_verify(self):
-        
+
         url = reverse("jwt-verify")
         response = self.client_instance.post(
             url)
@@ -79,79 +79,78 @@ class JWTAuthenticationTest(APITestCase):
         # self.assertTrue("access" in response.data)
         print(response.data)
 
-    # def test_jwt_refresh_bad_token(self):
-    #     url = reverse("jwt-refresh")
-    #     response = self.client.post(
-    #         url, {"refresh": self.refresh_token + "1"}, format="json")
+    def test_jwt_refresh_bad_token(self):
+        url = reverse("jwt-refresh")
+        self.client.cookies["refresh"] = "bad token"
+        response = self.client.post(
+            url)
 
-    #     self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-    #     self.assertEqual(response.data["detail"],
-    #                      "Token is invalid or expired")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data["detail"],
+                         "Token is invalid or expired")
 
-    # def test_get_user(self):
-    #     url = reverse("user-me")
-    #     response = self.client.get(
-    #         url)
+    def test_get_user(self):
+        url = reverse("user-me")
+        response = self.client_instance.get(
+            url)
 
-    #     print(response.data)
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(
-    #         response.data["email"], "test@example.com")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data["email"], "test@example.com")
 
-    # def test_password_reset(self):
-    #     url = reverse("user-reset-password")
-    #     response = self.client.post(url, {"email": "test@example.com"})
+    def test_password_reset(self):
+        url = reverse("user-reset-password")
+        response = self.client_instance.post(
+            url, {"email": "test@example.com"})
 
-    #     self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(len(mail.outbox), 1)
 
-    #     # extract uid and token from email
-    #     email_body = mail.outbox[0].body
-    #     password_reset_url = re.search(
-    #         r"http://testserver/password-reset/(\S+)/(\S+)", email_body)
-    #     if password_reset_url:
-    #         uid, token = password_reset_url.groups()
-    #     else:
-    #         self.fail("Password reset URL not found in the email body")
+        # extract uid and token from email
+        email_body = mail.outbox[0].body
+        password_reset_url = re.search(
+            r"http://localhost:3000/password-reset/(\S+)/(\S+)", email_body)
+        if password_reset_url:
+            uid, token = password_reset_url.groups()
+        else:
+            self.fail("Password reset URL not found in the email body")
 
-    #     # confirm password reset
-    #     new_password = "newtestpassword123"
-    #     url = reverse("user-reset-password-confirm")
-    #     response = self.client.post(url, {
-    #         "uid": uid, "token": token, "new_password": new_password, "re_new_password": new_password
-    #     })
+        # confirm password reset
+        new_password = "newtestpassword123"
+        url = reverse("user-reset-password-confirm")
+        response = self.client_instance.post(url, {
+            "uid": uid, "token": token, "new_password": new_password, "re_new_password": new_password
+        })
 
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-    #     # check if user can login with new password
-    #     self.user.refresh_from_db()
-    #     self.assertTrue(self.user.check_password(new_password))
+        # check if user can login with new password
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password(new_password))
 
-    # def test_user_deletion(self):
-    #     url = reverse("user-me")
-    #     response = self.client.delete(
-    #         url, {"current_password": "testpassword123"}, HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
+    def test_user_deletion(self):
+        url = reverse("user-me")
+        response = self.client_instance.delete(
+            url, {"current_password": "testpassword123"})
 
-    #     print(response.data)
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-    #     with self.assertRaises(User.DoesNotExist):
-    #         User.objects.get(username="newtestuser")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(User.DoesNotExist):
+            User.objects.get(username="newtestuser")
 
-    # def test_update_user(self):
-    #     url = reverse("user-me")
-    #     updated_data = {
-    #         "email": "newTestEmail@example.com",
-    #         # "first_name": "John",
-    #     }
-    #     response = self.client.patch(
-    #         url, updated_data, HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
+    def test_update_user(self):
+        url = reverse("user-me")
+        updated_data = {
+            "email": "newTestEmail@example.com",
+            # "first_name": "John",
+        }
+        response = self.client_instance.patch(
+            url, updated_data)
 
-    #     print(response.data)
-    #     self.user.refresh_from_db()
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(
-    #         response.data["email"], "newTestEmail@example.com")
-    #     # self.assertEqual(
-    #     #     self.user.first_name, "John")
+        self.user.refresh_from_db()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data["email"], "newTestEmail@example.com")
+        # self.assertEqual(
+        #     self.user.first_name, "John")
 
     # # def test_access_protected_endpoint_with_token(self):
     # #     # obtain JWT token

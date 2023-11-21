@@ -67,16 +67,16 @@ class CustomTokenRefreshView(TokenRefreshView):
 class CustomTokenVerifyView(TokenVerifyView):
     def post(self, request, *args, **kwargs):
         access_token = request.COOKIES.get("access")
-        print("Access token from cookies:", access_token)
+        # print("Access token from cookies:", access_token)
 
         if access_token:
             request.data["token"] = access_token
 
             response = super().post(request, *args, **kwargs)
-            print("Response from super:", response)
+            # print("Response from super:", response)
             return response
         else:
-            print("No access token found in cookies")
+            # print("No access token found in cookies")
             return Response({"detail": "No access token provided"}, status=status.HTTP_400_BAD_REQUEST)
 
 
