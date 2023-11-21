@@ -163,7 +163,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTHENTICATION_BACKENDS = {
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
-    'django.authentication.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
 
 }
 
@@ -173,9 +173,6 @@ AUTHENTICATION_BACKENDS = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'vault_api.authentication.CustomJWTAuthentication',
-        # 'rest_framework_simplejwt.authentication.CustomJWTAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
