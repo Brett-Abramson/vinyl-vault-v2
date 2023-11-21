@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 from .views import (
+    CustomProviderAuthView,
     CustomTokenObtainPairView,
     CustomTokenRefreshView,
     CustomTokenVerifyView,
@@ -9,6 +10,10 @@ from .views import (
 from django.conf.urls import include
 
 urlpatterns = [
+    re_path(
+        r'^o/(?P<provider>\S+)/$',
+        CustomProviderAuthView.as_view(), name='provider-auth'
+    ),
     path("jwt/create/", CustomTokenObtainPairView.as_view(), name="jwt-create"),
     path("jwt/refresh/", CustomTokenRefreshView.as_view(), name="jwt-refresh"),
     path("jwt/verify/", CustomTokenVerifyView.as_view(), name="jwt-verify"),
