@@ -48,6 +48,7 @@ ALLOWED_HOSTS = getenv('DJANGO_ALLOWED_HOSTS',
 # Application definition
 
 INSTALLED_APPS = [
+    'social_django',
     'djoser',
     'vault_api',
     'rest_framework',
@@ -159,6 +160,14 @@ STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+AUTHENTICATION_BACKENDS = {
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.authentication.backends.ModelBackend',
+
+}
+
+
 # SimpleJWT Configuration
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
 REST_FRAMEWORK = {
@@ -182,16 +191,33 @@ DJOSER = {
     'SET_PASSWORD_RETYPE': 'users/set_password/',
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'TOKEN_MODEL': None,
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': getenv('REDIRECT_URLS').split(',')
 }
 
 AUTH_COOKIE = 'access'
 AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5
-AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24 # 60secs 60 mins 24 hours
+AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24  # 60secs 60 mins 24 hours
 AUTH_COOKIE_SECURE = getenv('AUTH_COOKIE_SECURE', 'True') == 'True'
 AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = '/'
 AUTH_COOKIE_SAMESITE = 'None'
 
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = getenv('GOOGLE_AUTH_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = getenv('GOOGLE_AUTH_SECRET_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+]
+SOCIAL_AUTH_GOOGLE_OAUTH2_DATA = ['first_name', 'last_name']
+
+SOCIAL_AUTH_FACEBOOK_KEY = getenv('FACEBOOK_AUTH_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = getenv('FACEBOOK_AUTH_SECRET_KEY')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'email, first_name, last_name'
+}
 
 CORS_ALLOWED_ORIGINS = getenv(
     'CORS_ALLOWED_ORIGINS', 'http://localhost:3000, http://127.0.0.1:3000').split(',')
