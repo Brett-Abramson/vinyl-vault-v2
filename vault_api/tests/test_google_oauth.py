@@ -11,7 +11,7 @@
 #     mock_google_oauth2.return_value = {
 #       "access_token": "fake_access_token",
 #       "refresh_token": "fake_refresh_token",
-#       "user_infoe": {
+#       "user_info": {
 #         "email":"test@example.com",
 #         "first_name": "Test",
 #         "last_name": "User"
