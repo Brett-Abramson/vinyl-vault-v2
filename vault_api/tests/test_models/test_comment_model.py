@@ -1,18 +1,19 @@
 from django.test import TestCase
-
 from vault_api.models import Album, User, Track, Comment
 from datetime import date
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
 
 
 class CommentModelTest(TestCase):
     @classmethod
     def setUp(cls):
-        test_user = User.objects.create(username="Test User", email="testing@example.com",
-                                        spotify_id="12345", favorite_genres="Blues, Jazz")
+        test_user = User.objects.create(
+            username="Test User", email="testing@example.com", favorite_genres="Blues, Jazz")
         test_user.set_password("123456")
         test_user.save()
         test_album = Album.objects.create(artist_name="Test Artist", title="Test Album", release_date=date.today(
-        ), artwork="http://testurl.com", length="00:04:20", spotify_id="123456")
+        ), artwork="http://testurl.com", length="00:04:20")
         test_track = Track.objects.create(album=test_album, track_name="Test Track One",  length="00:04:20",
                                           order_num=1, musicians="Test Player One, Test Player Two", user_notes="Test Notes")
 

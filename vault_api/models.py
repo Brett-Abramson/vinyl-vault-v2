@@ -1,10 +1,30 @@
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser, UserManager, Group, Permission
 from django.db import models
 # Create your models here.
 
 
+class CustomUserManager(UserManager):
+    def create_user(self, username, password=None, **extra_fields):
+        if not username:
+            raise ValueError("The given username must be set")
+        user = self.model(username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self.db)
+        return user
+
+    def create_superuser(self, username, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True")
+
+        return self.create_user(username, password, **extra_fields)
+
+
 class User(AbstractUser):
-    spotify_id = models.CharField(max_length=200, blank=True, null=True)
     albums = models.ManyToManyField("Album", blank=True)
     favorite_genres = models.CharField(max_length=200, blank=True)
 
@@ -26,8 +46,28 @@ class User(AbstractUser):
         related_query_name="user"
     )
 
+    objects = CustomUserManager()
+
     def __str__(self):
         return self.username
+
+
+class SpotifyProfile(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="spotify_profile")
+    spotify_id = models.CharField(max_length=200, blank=True, null=True)
+    access_token = models.TextField(blank=True, null=True)
+    refresh_token = models.TextField(blank=True, null=True)
+    token_expires = models.DateTimeField(blank=True, null=True)
+    scope = models.TextField(blank=True, null=True)
+    profile_link = models.URLField(max_length=500, blank=True, null=True)
+
+    profile_pic_url = models.URLField(max_length=500, blank=True, null=True)
+    profile_pic_height = models.IntegerField(blank=True, null=True)
+    profile_pic_width = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Spotify Profile for {self.user.username}"
 
 
 class Album(models.Model):

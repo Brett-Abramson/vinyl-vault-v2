@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Album, Track, Comment
+from .models import User, Album, Track, Comment, SpotifyProfile
 
 
 class TrackSerializer(serializers.ModelSerializer):
@@ -25,10 +25,24 @@ class CommentSerializer(serializers.ModelSerializer):
                   "comment_section", "created_on", "updated_at")
 
 
+class SpotifySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpotifyProfile
+        fields = ("user", "spotify_id", "access_token", "refresh_token", "token_expires",
+                  " scope", "profile_link", "profile_pic_url", "profile_pic_height", "profile_pic_width")
+        read_only_fields = ("access_token", "refresh_token")
+
+
 class UserSerializer(serializers.ModelSerializer):
     albums = AlbumSerializer(many=True, read_only=True)
+    spotify_profile = SpotifySerializer(many=False)
 
     class Meta:
         model = User
         fields = ("id", "username", "email",
-                  "spotify_id", "albums", "favorite_genres")
+                  "albums", "favorite_genres", "first_name", "last_name", "spotify_profile")
+
+    def vaildate_spotify_id(self, value):
+        if not value.startswith("spotify:"):
+            raise serializers.ValidationError("Invalid Spotify ID format.")
+        return value

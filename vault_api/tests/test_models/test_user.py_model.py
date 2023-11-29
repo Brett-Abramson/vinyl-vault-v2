@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from vault_api.models import Album, User
-from datetime import date 
+from datetime import date
 # from django.contrib.auth.models import Group, Permission
 
 
@@ -13,7 +13,7 @@ class UserModelTest(TestCase):
 
         # create an album to associate it with the user
         test_album = Album.objects.create(artist_name="Test Artist", title="Test Album", release_date=date.today(
-        ), artwork="http://testurl.com", length="00:04:20", spotify_id="123456")
+        ), artwork="http://testurl.com", length="00:04:20")
         test_user = User.objects.get(username="testuser")
         test_user.set_password("123456")
         test_user.albums.add(test_album)
@@ -25,7 +25,6 @@ class UserModelTest(TestCase):
         self.assertEqual(user.username, "testuser")
         self.assertEqual(user.email, "test@example.com")
         self.assertTrue(user.check_password("123456"))
-        self.assertEqual(user.spotify_id, "12345")
         self.assertEqual(user.favorite_genres, "Blues, Jazz")
 
     def test_albums_association(self):
