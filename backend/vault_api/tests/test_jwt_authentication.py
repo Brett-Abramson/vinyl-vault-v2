@@ -36,7 +36,7 @@ class JWTAuthenticationTest(APITestCase):
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
         # log in user and store tokens from cookies
-        login_url = reverse("jwt-create")
+        login_url = reverse("jwt_create")
         login_response = cls.client_instance.post(
             login_url, {"username": "newtestuser", "password": "testpassword123"}, format="json")
 
@@ -53,14 +53,14 @@ class JWTAuthenticationTest(APITestCase):
 
     def test_jwt_verify(self):
 
-        url = reverse("jwt-verify")
+        url = reverse("jwt_verify")
         response = self.client_instance.post(
             url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_jwt_verify_bad_token(self):
-        url = reverse("jwt-verify")
+        url = reverse("jwt_verify")
         self.client.cookies["access"] = "bad token"
         response = self.client.post(
             url)
@@ -71,16 +71,16 @@ class JWTAuthenticationTest(APITestCase):
                          "Token is invalid or expired")
 
     def test_jwt_refresh(self):
-        url = reverse("jwt-refresh")
+        url = reverse("jwt_refresh")
         response = self.client_instance.post(
             url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # self.assertTrue("access" in response.data)
-        print(response.data)
+        # print(response.data)
 
     def test_jwt_refresh_bad_token(self):
-        url = reverse("jwt-refresh")
+        url = reverse("jwt_refresh")
         self.client.cookies["refresh"] = "bad token"
         response = self.client.post(
             url)
