@@ -1,2 +1,3 @@
-from .auth_views import CustomProviderAuthView, CustomTokenObtainPairView, CustomTokenRefreshView, CustomTokenVerifyView, LogoutView
-from .album_views import AlbumDetail, AlbumList
+from .auth_views import *
+from .album_views import *
+from .comments_view import *

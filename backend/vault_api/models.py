@@ -26,7 +26,7 @@ class CustomUserManager(UserManager):
 
 class User(AbstractUser):
     albums = models.ManyToManyField("Album", blank=True)
-    favorite_genres = models.CharField(max_length=200, blank=True)
+    favorite_genres = models.CharField(max_length=200, blank=True, null=True)
 
     # Overriding the groups and user_permissions fields
     groups = models.ManyToManyField(
@@ -73,8 +73,8 @@ class SpotifyProfile(models.Model):
 class Album(models.Model):
     artist_name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
-    release_date = models.DateField(blank=True)
-    artwork = models.URLField(max_length=200, blank=True)
+    release_date = models.DateField(blank=True, null=True)
+    artwork = models.URLField(max_length=200, blank=True, null=True)
     length = models.DurationField()
     spotify_id = models.CharField(
         max_length=100, unique=True, blank=True, null=True)
@@ -88,10 +88,10 @@ class Track(models.Model):
         Album, on_delete=models.CASCADE, related_name="tracks")
     track_name = models.CharField(max_length=100)
     length = models.DurationField()
-    order_num = models.PositiveIntegerField()
+    order_num = models.PositiveIntegerField(blank=True, null=True)
 
-    musicians = models.CharField(max_length=200, blank=True)
-    user_notes = models.TextField(blank=True)
+    musicians = models.CharField(max_length=200, blank=True, null=True)
+    user_notes = models.TextField(blank=True, null=True)
     spotify_id = models.CharField(
         max_length=100, unique=True, blank=True, null=True)
 

@@ -10,6 +10,7 @@ from rest_framework_simplejwt.views import (
 from djoser.social.views import ProviderAuthView
 
 
+# Handles authentication process for social providers
 class CustomProviderAuthView(ProviderAuthView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -39,7 +40,7 @@ class CustomProviderAuthView(ProviderAuthView):
 
             return response
 
-
+# handles traditional JWT logins
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -70,6 +71,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             return response
 
 
+# handles refreshing of JWT or OOAuth access tokens
 class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get("refresh")
@@ -95,6 +97,7 @@ class CustomTokenRefreshView(TokenRefreshView):
             return response
 
 
+# verifies JWT access token is still valid
 class CustomTokenVerifyView(TokenVerifyView):
     def post(self, request, *args, **kwargs):
         access_token = request.COOKIES.get("access")
