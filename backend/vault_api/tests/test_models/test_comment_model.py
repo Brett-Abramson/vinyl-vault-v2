@@ -1,11 +1,11 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from vault_api.models import Album, User, Track, Comment
 from datetime import date
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
 
 
-class CommentModelTest(TestCase):
+class CommentModelTest(APITestCase):
     @classmethod
     def setUp(cls):
         test_user = User.objects.create(
