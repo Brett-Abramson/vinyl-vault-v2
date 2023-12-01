@@ -7,12 +7,12 @@ from ..models import Album
 
 
 class AlbumList(generics.ListCreateAPIView):
-    queryset = Album.objects.all().order_by("id")
+    queryset = Album.objects.all().order_by("album_id")
     serializer_class = AlbumSerializer
     permission_classes = [AllowAny]
 
 
 class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Album.objects.all().order_by("id")
+    queryset = Album.objects.all().order_by("album_id")
     serializer_class = AlbumSerializer
     permission_classes = [IsAuthenticated]

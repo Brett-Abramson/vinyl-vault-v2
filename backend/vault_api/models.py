@@ -71,6 +71,7 @@ class SpotifyProfile(models.Model):
 
 
 class Album(models.Model):
+    album_id = models.BigAutoField(primary_key=True)
     artist_name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     release_date = models.DateField(blank=True, null=True)
