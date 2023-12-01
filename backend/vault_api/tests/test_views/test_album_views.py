@@ -1,19 +1,32 @@
+from rest_framework.test import APITestCase, APIClient
+from django.contrib.auth import get_user_model
 from django.urls import reverse
+# from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APITestCase
 from datetime import date, timedelta
 
 from vault_api.models import Album
 
 
-class AlbumListTest(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
+class BaseAuthenticatedTestCase(APITestCase):
+    def setUp(self):
+        # create a user and authenticate
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            username="testuser", password="testpassword")
+        self.client.force_authenticate(user=self.user)
+
         # create test albums
-        Album.objects.create(artist_name="artist1", title="album1", release_date=date.today(
+        self.album1 = Album.objects.create(artist_name="artist1", title="album1", release_date=date.today(
         ), artwork="http://url1.com", length="00:04:20", spotify_id="abc123")
-        Album.objects.create(artist_name="artist2", title="album2", release_date=date.today(
+        self.album2 = Album.objects.create(artist_name="artist2", title="album2", release_date=date.today(
         ), artwork="http://url2.com", length="00:04:20", spotify_id="def456")
+
+        # assign the albums to the user
+        self.user.albums.add(self.album1, self.album2)
+
+
+class AlbumListTest(BaseAuthenticatedTestCase):
 
     def test_get_all_albums(self):
         url = reverse("album_list")
@@ -34,29 +47,20 @@ class AlbumListTest(APITestCase):
             artist_name="newArtist").title, "newAlbum")
 
 
-class AlbumDetailTest(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
-        # create test albums
-        cls.album = Album.objects.create(artist_name="artist1", title="album1", release_date=date.today(
-        ), artwork="http://url1.com", length="00:04:20", spotify_id="abc123")
+class AlbumDetailTest(BaseAuthenticatedTestCase):
 
     def test_get_album(self):
-        url = reverse("album_detail", kwargs={"pk": self.album.pk})
+        url = reverse("album_detail", kwargs={"pk": self.album1.pk})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["id"], self.album.pk)
+        self.assertEqual(response.data["id"], self.album1.pk)
 
 
-class AlbumUpdateTest(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.album = Album.objects.create(artist_name="artist1", title="album1", release_date=date.today(
-        ), artwork="http://url1.com", length="00:04:20", spotify_id="abc123")
+class AlbumUpdateTest(BaseAuthenticatedTestCase):
 
     def test_update_album(self):
-        url = reverse("album_detail", kwargs={"pk": self.album.pk})
+        url = reverse("album_detail", kwargs={"pk": self.album1.pk})
         updated_data = {
             "artist_name": "updated artist",
             "title": "updated title",
@@ -67,29 +71,24 @@ class AlbumUpdateTest(APITestCase):
         }
         response = self.client.put(url, updated_data, format="json")
         expected_length = timedelta(hours=0, minutes=5, seconds=0)
-        self.album.refresh_from_db()  # refresh the instance to get updated data
+        self.album1.refresh_from_db()  # refresh the instance to get updated data
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(self.album.artist_name, updated_data["artist_name"])
-        self.assertEqual(self.album.title, updated_data["title"])
-        self.assertEqual(self.album.release_date, updated_data["release_date"])
-        self.assertEqual(self.album.artwork, updated_data["artwork"])
-        self.assertEqual(self.album.length, expected_length)
-        self.assertEqual(self.album.spotify_id, updated_data["spotify_id"])
+        self.assertEqual(self.album1.artist_name, updated_data["artist_name"])
+        self.assertEqual(self.album1.title, updated_data["title"])
+        self.assertEqual(self.album1.release_date, updated_data["release_date"])
+        self.assertEqual(self.album1.artwork, updated_data["artwork"])
+        self.assertEqual(self.album1.length, expected_length)
+        self.assertEqual(self.album1.spotify_id, updated_data["spotify_id"])
 
 
-class AlbumDeleteTest(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
-        # create test albums
-        cls.album = Album.objects.create(artist_name="artist1", title="album1", release_date=date.today(
-        ), artwork="http://url1.com", length="00:04:20", spotify_id="abc123")
+class AlbumDeleteTest(BaseAuthenticatedTestCase):
 
     def test_delete_album(self):
         album_count_before_delete = Album.objects.count()
-        url = reverse("album_detail", kwargs={"pk": self.album.pk})
+        url = reverse("album_detail", kwargs={"pk": self.album1.pk})
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Album.objects.count(), album_count_before_delete - 1)
-        self.assertFalse(Album.objects.filter(pk=self.album.pk).exists())
+        self.assertFalse(Album.objects.filter(pk=self.album1.pk).exists())
