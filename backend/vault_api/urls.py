@@ -24,7 +24,7 @@ urlpatterns = [
     path("api/albums/", views.AlbumList.as_view(), name="album_list"),
     path("api/albums/<int:album_id>/", views.AlbumDetail.as_view(), name="album_detail"),
     # Tracks
-    path("api/album/<int:album_id/tracks/<int:track_id>", views.TrackDetail.as_view(),name="track_list")
+    path("api/album/<int:album_id>/tracks/<int:track_id>", views.TrackDetail.as_view(),name="track_list"),
     # Comments
     path("api/albums/<int:album_id>/comments/",
          views.CommentListCreateView.as_view(), name="album_comments"),
