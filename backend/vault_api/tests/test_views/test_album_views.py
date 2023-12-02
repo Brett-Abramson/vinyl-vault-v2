@@ -49,18 +49,20 @@ class AlbumListTest(BaseAuthenticatedTestCase):
 
 class AlbumDetailTest(BaseAuthenticatedTestCase):
     def test_get_album(self):
-        url = reverse("album_detail", kwargs={"pk": self.album1.pk})
+        url = reverse("album_detail", kwargs={
+                      "album_id": self.album1.album_id})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["id"], self.album1.pk)
+        self.assertEqual(response.data["album_id"], self.album1.album_id)
 
     def test_get_album_unauthiticated_user(self):
-        url = reverse("album_detail", kwargs={"pk": self.album1.pk})
+        url = reverse("album_detail", kwargs={
+                      "album_id": self.album1.album_id})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["id"], self.album1.pk)
+        self.assertEqual(response.data["album_id"], self.album1.album_id)
 
 
 class AlbumUnAuthenticatedDetailTest(BaseAuthenticatedTestCase):
@@ -74,7 +76,7 @@ class AlbumUnAuthenticatedDetailTest(BaseAuthenticatedTestCase):
         self.user.albums.add(self.album)
 
     def test_get_album_unauthenticated_user(self):
-        url = reverse("album_detail", kwargs={"pk": self.album.pk})
+        url = reverse("album_detail", kwargs={"album_id": self.album.album_id})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -83,7 +85,7 @@ class AlbumUnAuthenticatedDetailTest(BaseAuthenticatedTestCase):
 class AlbumUpdateTest(BaseAuthenticatedTestCase):
 
     def test_update_album(self):
-        url = reverse("album_detail", kwargs={"pk": self.album1.pk})
+        url = reverse("album_detail", kwargs={"album_id": self.album1.album_id})
         updated_data = {
             "artist_name": "updated artist",
             "title": "updated title",
@@ -112,7 +114,7 @@ class AlbumUpdateUnauthenticatedTest(APITestCase):
         ), artwork="http://url1.com", length="00:04:20", spotify_id="abc789")
 
     def test_unauthenticated_user_cannot_update_album(self):
-        url = url = reverse("album_detail", kwargs={"pk": self.album.pk})
+        url = url = reverse("album_detail", kwargs={"album_id": self.album.album_id})
         updated_data = {
             "artist_name": "updated artist",
             "title": "updated title",
@@ -130,9 +132,9 @@ class AlbumDeleteTest(BaseAuthenticatedTestCase):
 
     def test_delete_album(self):
         album_count_before_delete = Album.objects.count()
-        url = reverse("album_detail", kwargs={"pk": self.album1.pk})
+        url = reverse("album_detail", kwargs={"album_id": self.album1.album_id})
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Album.objects.count(), album_count_before_delete - 1)
-        self.assertFalse(Album.objects.filter(pk=self.album1.pk).exists())
+        self.assertFalse(Album.objects.filter(album_id=self.album1.album_id).exists())
