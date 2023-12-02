@@ -1,7 +1,8 @@
 from django.conf import settings
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-
+#  check for JWTs in the request headers and, if not found there, fall back to checking the cookies
+# If a valid JWT is found, the class authenticates the user associated with the token.
 class CustomJWTAuthentication(JWTAuthentication):
     def authenticate(self, request):
         try:

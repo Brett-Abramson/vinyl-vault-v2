@@ -19,8 +19,8 @@ from django.urls import path
 from django.conf.urls import include
 
 urlpatterns = [
-    path('', include('vault_api.urls')),
     path('admin/', admin.site.urls),
+    path('', include('vault_api.urls')),
     path('api/', include('djoser.urls')),
     path('api/', include('vault_api.urls')),
 ]

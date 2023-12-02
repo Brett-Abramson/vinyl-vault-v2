@@ -71,7 +71,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             return response
 
 
-# handles refreshing of JWT or OOAuth access tokens
+# handles refreshing of JWT or OAuth access tokens
 class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get("refresh")

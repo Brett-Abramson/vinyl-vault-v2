@@ -7,6 +7,6 @@ from ..models import Track
 
 
 class TrackDetail(generics.RetrieveUpdateDestroyAPIView):
-  queryset = Track.objects.all().order_by("id")
+  queryset = Track.objects.all().order_by("track_id")
   serializer_class = TrackSerializer
   permission_classes = [IsAuthenticated]

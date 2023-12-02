@@ -85,6 +85,7 @@ class Album(models.Model):
 
 
 class Track(models.Model):
+    track_id = models.BigAutoField(primary_key=True)
     album = models.ForeignKey(
         Album, on_delete=models.CASCADE, related_name="tracks")
     track_name = models.CharField(max_length=100)
@@ -106,6 +107,7 @@ class Track(models.Model):
 
 class Comment(models.Model):
     # Relations
+    comment_id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     album = models.ForeignKey(
         Album, on_delete=models.CASCADE, null=True, blank=True)

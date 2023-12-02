@@ -16,7 +16,7 @@ urlpatterns = [
         CustomProviderAuthView.as_view(), name='provider_auth'
     ),
     # JWT Auth
-    path("jwt/create/", CustomTokenObtainPairView.as_view(), name="jwt_create"), # login
+    path("jwt/create/", CustomTokenObtainPairView.as_view(), name="jwt_create"), 
     path("jwt/refresh/", CustomTokenRefreshView.as_view(), name="jwt_refresh"), 
     path("jwt/verify/", CustomTokenVerifyView.as_view(), name="jwt_verify"),
     path("logout/", LogoutView.as_view()),
@@ -24,7 +24,7 @@ urlpatterns = [
     path("api/albums/", views.AlbumList.as_view(), name="album_list"),
     path("api/albums/<int:album_id>/", views.AlbumDetail.as_view(), name="album_detail"),
     # Tracks
-    path("api/album/<int:album_id>/tracks/<int:track_id>", views.TrackDetail.as_view(),name="track_list"),
+    path("api/album/<int:album_id>/tracks/<int:track_id>", views.TrackDetail.as_view(),name="track_detail"),
     # Comments
     path("api/albums/<int:album_id>/comments/",
          views.CommentListCreateView.as_view(), name="album_comments"),
