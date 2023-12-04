@@ -11,6 +11,7 @@ class CommentListCreateView(generics.ListCreateAPIView):
 
 
 class CommentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     lookup_field = "comment_id"
     permission_classes = [permissions.IsAuthenticated]
