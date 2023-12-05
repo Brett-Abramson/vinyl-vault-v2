@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { apiSplice } from "./services/apiSlice";
+import { apiSlice } from "./services/apiSlice";
 import authReducer from "./features/authSlice";
 
 // configure the redux store
@@ -7,10 +7,10 @@ import authReducer from "./features/authSlice";
 // the factory function is beneficial for server-side rendering in Next.js and for isolating store instances in testing
 
 export const makeStore = () => {
-  configureStore({
+  return configureStore({ // added a return to solve the error with "getState" and "dispatch" type of void
     reducer: {
       // each reducer manages its own part of the global state
-      [apiSplice.reducerPath]: apiSplice.reducer,
+      [apiSlice.reducerPath]: apiSlice.reducer,
       // "auth" state slace is managed by the authReducer
       auth: authReducer,
     },
