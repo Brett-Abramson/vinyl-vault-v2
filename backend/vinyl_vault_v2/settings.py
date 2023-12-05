@@ -185,10 +185,10 @@ else:
     }
 
 
-
 AUTHENTICATION_BACKENDS = {
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.spotify.SpotifyOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 
 }
@@ -218,7 +218,7 @@ DJOSER = {
 }
 
 AUTH_COOKIE = 'access'
-AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5 # 5 mins
+AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5  # 5 mins
 AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24  # 1 day
 AUTH_COOKIE_SECURE = getenv('AUTH_COOKIE_SECURE', 'True') == 'True'
 AUTH_COOKIE_HTTP_ONLY = True
@@ -240,6 +240,10 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'email, first_name, last_name'
 }
+SOCIAL_AUTH_SPOTIFY_KEY = getenv('SPOTIFY_AUTH_KEY')
+SOCIAL_AUTH_SPOTIFY_SECRET = getenv('SPOTIFY_AUTH_SECRET_KEY')
+SOCIAL_AUTH_SPOTIFY_SCOPE = ['user-library-read user-library-modify user-top-read user-follow-read user-read-email user-read-private']
+
 
 CORS_ALLOWED_ORIGINS = getenv(
     'CORS_ALLOWED_ORIGINS', 'http://localhost:3000, http://127.0.0.1:3000').split(',')
