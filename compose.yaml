@@ -45,7 +45,9 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=devolpment
-
+    volumes:
+      - ./frontend:/app
+      - /frontend/node_modules
 volumes:
   postgres_data:
 
