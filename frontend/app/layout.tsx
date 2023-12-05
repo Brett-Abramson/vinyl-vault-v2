@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { roboto } from "./fonts";
+import { roboto } from "../styles/fonts";
 import CssBaseline from "@mui/material/CssBaseline";
-import "./globals.css";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Vinyl Vault",
