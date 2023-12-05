@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { roboto } from "../styles/fonts";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Navbar, Footer } from "@/components/common";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -15,9 +16,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <CssBaseline>
-        <body className={roboto.className}>{children}</body>
-      </CssBaseline>
+      <body className={roboto.className}>
+        <CssBaseline>
+          <Navbar />
+          <div>{children}</div>
+          <Footer />
+        </CssBaseline>
+      </body>
     </html>
   );
 }
