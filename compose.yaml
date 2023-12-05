@@ -38,6 +38,14 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
+
+  nextjs:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=devolpment
+
 volumes:
   postgres_data:
 
