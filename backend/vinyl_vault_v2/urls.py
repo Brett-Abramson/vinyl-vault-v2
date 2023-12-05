@@ -20,7 +20,7 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('vault_api.urls')),
+    # path('', include('vault_api.urls')),
+    path('api/v1/', include('vault_api.urls')),
     path('api/', include('djoser.urls')),
-    path('api/', include('vault_api.urls')),
 ]
