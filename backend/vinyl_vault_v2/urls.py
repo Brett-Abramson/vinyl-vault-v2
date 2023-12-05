@@ -27,7 +27,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title='Vault API',
         default_version='v1',
-        description='Vainyl Vault API',
+        description='Vinyl Vault API',
         terms_of_service='https://www.google.com/policies/terms/',
         contact=openapi.Contact(email=getenv('AWS_SES_FROM_EMAIL')),
         license=openapi.License(name='BSD License')
