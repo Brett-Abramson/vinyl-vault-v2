@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { apiSplice } from "./services/apiSlice";
 import authReducer from "./features/authSlice";
-
 
 // configure the redux store
 // factory function that sets up the store with reducers and enables redux devTools in development mode
@@ -10,6 +10,7 @@ export const makeStore = () => {
   configureStore({
     reducer: {
       // each reducer manages its own part of the global state
+      [apiSplice.reducerPath]: apiSplice.reducer,
       // "auth" state slace is managed by the authReducer
       auth: authReducer,
     },
@@ -17,8 +18,7 @@ export const makeStore = () => {
   });
 };
 
-
-// the following are type definitions for convenience when using the redux store 
+// the following are type definitions for convenience when using the redux store
 
 // AppStore type represents the type of the Redux store
 export type AppStore = ReturnType<typeof makeStore>;
@@ -26,4 +26,3 @@ export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore["getState"]>;
 // AppDispatch type represents the dispatch type for the Redux store
 export type AppDispatch = AppStore["dispatch"];
-
