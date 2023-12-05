@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// define the shape of the authentication-related state
 interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
 }
 
 const initialState = {
-  // determine if a user is logged in and active or not
-  isAuthenticated: false,
-  // default true, using for waiting to verify a user
-  isLoading: true,
+  isAuthenticated: false, // whether the user is authenticated
+  isLoading: true, // loading state during authntication
 } as AuthState;
 
+// create a slice for authentication with reducers to handle specific actions
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -29,4 +29,5 @@ const authSlice = createSlice({
 });
 
 export const { setAuth, logout, finishIntialLoad } = authSlice.actions;
+// export the reducer to be comined in the store
 export default authSlice.reducer;
