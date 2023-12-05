@@ -16,9 +16,9 @@ urlpatterns = [
         CustomProviderAuthView.as_view(), name='provider_auth'
     ),
     # JWT Auth
-    path("jwt/create/", CustomTokenObtainPairView.as_view(), name="jwt_create"), 
-    path("jwt/refresh/", CustomTokenRefreshView.as_view(), name="jwt_refresh"), 
-    path("jwt/verify/", CustomTokenVerifyView.as_view(), name="jwt_verify"),
+    path("api/jwt/create/", CustomTokenObtainPairView.as_view(), name="jwt_create"), 
+    path("api/jwt/refresh/", CustomTokenRefreshView.as_view(), name="jwt_refresh"), 
+    path("api/jwt/verify/", CustomTokenVerifyView.as_view(), name="jwt_verify"),
     path("logout/", LogoutView.as_view()),
     # Album
     path("api/albums/", views.AlbumList.as_view(), name="album_list"),
