@@ -8,7 +8,7 @@ from datetime import date
 class UserModelTest(TestCase):
     @classmethod
     def setUp(cls):
-        User.objects.create(username="testuser", email="test@example.com",
+        User.objects.create(first_name="John", last_name="Doe", username="testuser", email="test@example.com",
                             spotify_id="12345", favorite_genres="Blues, Jazz")
 
         # create an album to associate it with the user
@@ -22,6 +22,7 @@ class UserModelTest(TestCase):
     def test_user_creation(self):
         user = User.objects.get(username="testuser")
         self.assertTrue(isinstance(user, User))
+        self.assertEqual(user.first_name, "John")
         self.assertEqual(user.username, "testuser")
         self.assertEqual(user.email, "test@example.com")
         self.assertTrue(user.check_password("123456"))
