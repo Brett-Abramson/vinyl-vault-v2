@@ -1,5 +1,6 @@
 import { FormEvent } from "react";
 import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
 
 interface Props {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -12,7 +13,9 @@ const Form = ({ handleSubmit }: Props) => {
       noValidate
       onSubmit={handleSubmit}
       sx={{ mt: 3 }}
-    ></Box>
+    >
+      <Grid container spacing={2}></Grid>
+    </Box>
   );
 };
 
