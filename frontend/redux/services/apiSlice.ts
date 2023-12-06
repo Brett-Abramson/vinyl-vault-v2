@@ -7,10 +7,12 @@ import type {
 import { setAuth, logout } from "../features/authSlice";
 import { Mutex } from "async-mutex";
 
+console.log(`NEXT_PUBLIC_HOST: `, process.env.NEXT_PUBLIC_HOST);
+
 // create a new mutex
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api`,
+  baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api/`,
   credentials: "include",
 });
 const baseQueryWithReauth: BaseQueryFn<
@@ -28,7 +30,7 @@ const baseQueryWithReauth: BaseQueryFn<
       try {
         const refreshResult = await baseQuery(
           {
-            url: "/hwt/refresh/",
+            url: "/jwt/refresh/",
             method: "POST",
           },
           api,

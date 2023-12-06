@@ -7,13 +7,16 @@ import authReducer from "./features/authSlice";
 // the factory function is beneficial for server-side rendering in Next.js and for isolating store instances in testing
 
 export const makeStore = () => {
-  return configureStore({ // added a return to solve the error with "getState" and "dispatch" type of void
+  return configureStore({
+    // added a return to solve the error with "getState" and "dispatch" type of void
     reducer: {
       // each reducer manages its own part of the global state
       [apiSlice.reducerPath]: apiSlice.reducer,
       // "auth" state slace is managed by the authReducer
       auth: authReducer,
     },
+    middleware: (getDefaultMiddleWare) =>
+      getDefaultMiddleWare().concat(apiSlice.middleware),
     devTools: process.env.NODE_ENV !== "production",
   });
 };
