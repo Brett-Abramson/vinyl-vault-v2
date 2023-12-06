@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import { Input } from "@/components/forms";
 import { Spinner } from "@/components/common";
 
-
 interface Config {
   labelText: string;
   labelId: string;
@@ -23,12 +22,19 @@ interface Props {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-const Form = ({ config, isLoading, btnText, handleChange, handleSubmit }: Props) => {
+const Form = ({
+  config,
+  isLoading,
+  btnText,
+  handleChange,
+  handleSubmit,
+}: Props) => {
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
       <Grid container spacing={2}>
-        {config.map(input => {
+        {config.map((input) => (
           <Input
+            key={input.labelId}
             labelId={input.labelId}
             type={input.type}
             handleChange={handleChange}
@@ -37,8 +43,8 @@ const Form = ({ config, isLoading, btnText, handleChange, handleSubmit }: Props)
             fullWidth={input.fullWidth}
           >
             {input.labelText}
-          </Input>;
-        })}
+          </Input>
+        ))}
       </Grid>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
         {isLoading ? <Spinner /> : `${btnText}`}
