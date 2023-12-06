@@ -18,13 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <CssBaseline>
-          <Provider>
-            <Navbar />
-            <div>{children}</div>
-            <Footer />
-          </Provider>
-        </CssBaseline>
+        <CssBaseline />
+        <Provider>
+          <Navbar />
+          <div>{children}</div>
+          <Footer />
+        </Provider>
       </body>
     </html>
   );
