@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Provider from "@/redux/provider";
-import CssBaseline from "@mui/material/CssBaseline";
 import { Navbar, Footer } from "@/components/common";
-import { ThemeProvider } from "@mui/material";
 import { roboto } from "../styles/fonts";
-import theme from "@/styles/theme";
 import "@/styles/globals.css";
+import ThemeRegistry from "@/components/utils/ThemeRegistry/ThemeRegistry";
 
 export const metadata: Metadata = {
   title: "Vinyl Vault",
@@ -20,14 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <CssBaseline />
-        <ThemeProvider theme={theme}>
+        <ThemeRegistry>
           <Provider>
             <Navbar />
             <div>{children}</div>
             <Footer />
           </Provider>
-        </ThemeProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );

@@ -1,15 +1,12 @@
-"use client"
+"use client";
 
-import { createTheme } from "@mui/material";
+import { Theme, createTheme } from "@mui/material";
 
-const theme = createTheme({
-  palette: {},
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `body {
-          background: linear-gradient(to right, #f56565, #ecc94b, #48bb78);
-        }`,
-    },
+const theme: Theme = createTheme({});
+
+export const darkTheme: Theme = createTheme({
+  palette: {
+    mode: "dark",
   },
 });
 
