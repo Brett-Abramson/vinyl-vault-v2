@@ -1,6 +1,10 @@
 "use client";
 
 import * as React from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
+import { useRegisterMutation } from "@/redux/features/authApiSlice";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,9 +16,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
-import { useState, ChangeEvent, FormEvent } from "react";
-import { useRegisterMutation } from "@/redux/features/authApiSlice";
 
 const Copyright = (props: any) => {
   return (
@@ -35,6 +36,7 @@ const Copyright = (props: any) => {
 };
 
 const Page = () => {
+  const router = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
 
   const [formData, setFormData] = useState({
@@ -55,12 +57,13 @@ const Page = () => {
 
     register({ first_name, last_name, email, password, re_password })
       .unwrap()
-      .then(()=> {
-
+      .then(() => {
+        toast.success("Please check email to verify account");
+        router.push("/auth/login");
       })
       .catch(() => {
-        
-      })
+        toast.error("Failed to register account");
+      });
   };
 
   return (

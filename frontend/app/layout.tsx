@@ -3,7 +3,7 @@ import Provider from "@/redux/provider";
 import { Navbar, Footer } from "@/components/common";
 import { roboto } from "../styles/fonts";
 import "@/styles/globals.css";
-import ThemeRegistry from "@/components/utils/ThemeRegistry/ThemeRegistry";
+import { Setup, ThemeRegistry } from "@/components/utils";
 
 export const metadata: Metadata = {
   title: "Vinyl Vault",
@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className={roboto.className}>
         <ThemeRegistry>
           <Provider>
+            <Setup />
             <Navbar />
             <div>{children}</div>
             <Footer />
