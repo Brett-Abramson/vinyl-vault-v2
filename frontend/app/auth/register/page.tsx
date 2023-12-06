@@ -5,6 +5,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { useRegisterMutation } from "@/redux/features/authApiSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { Spinner } from "@/components/common";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -153,13 +154,14 @@ const Page = () => {
               />
             </Grid> */}
           </Grid>
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            {isLoading ? <Spinner /> : "Sign Up"}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
