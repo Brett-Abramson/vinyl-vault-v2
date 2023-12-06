@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { roboto } from "../styles/fonts";
-import CssBaseline from "@mui/material/CssBaseline";
 import Provider from "@/redux/provider";
+import CssBaseline from "@mui/material/CssBaseline";
 import { Navbar, Footer } from "@/components/common";
+import { ThemeProvider } from "@mui/material";
+import { roboto } from "../styles/fonts";
+import theme from "@/styles/theme";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -19,11 +21,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <CssBaseline />
-        <Provider>
-          <Navbar />
-          <div>{children}</div>
-          <Footer />
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <Provider>
+            <Navbar />
+            <div>{children}</div>
+            <Footer />
+          </Provider>
+        </ThemeProvider>
       </body>
     </html>
   );
