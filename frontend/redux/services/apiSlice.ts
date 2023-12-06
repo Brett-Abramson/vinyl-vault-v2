@@ -7,8 +7,6 @@ import type {
 import { setAuth, logout } from "../features/authSlice";
 import { Mutex } from "async-mutex";
 
-console.log(`NEXT_PUBLIC_HOST: `, process.env.NEXT_PUBLIC_HOST);
-
 // create a new mutex
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
@@ -52,6 +50,8 @@ const baseQueryWithReauth: BaseQueryFn<
       await mutex.waitForUnlock();
       result = await baseQuery(args, api, extraOptions);
     }
+  } else if (result.error) {
+    console.error("Api Error: ", result.error.status, result.error.data);
   }
   return result;
 };
