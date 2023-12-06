@@ -17,7 +17,7 @@ class JWTAuthenticationTest(APITestCase):
         # register user
         url = reverse("user-list")
         response = cls.client_instance.post(
-            url, {"username": "newtestuser", "email": "test@example.com", "password": "testpassword123", "re_password": "testpassword123"}, format="json")
+            url, {"first_name": "John", "last_name": "Doe", "username": "newtestuser", "email": "test@example.com", "password": "testpassword123", "re_password": "testpassword123"}, format="json")
 
         assert response.status_code == status.HTTP_201_CREATED
         assert len(mail.outbox) == 1
