@@ -38,25 +38,26 @@ const Copyright = (props: any) => {
 
 const Page = () => {
   const router = useRouter();
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register, { data, error, isLoading }] = useRegisterMutation();
 
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
+    username: "",
     email: "",
     password: "",
     re_password: "",
   });
 
-  const { first_name, last_name, email, password, re_password } = formData;
+  const { first_name, last_name, email, username, password, re_password } =
+    formData;
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    register({ first_name, last_name, email, password, re_password })
+    register({ first_name, last_name, username, email, password, re_password })
       .unwrap()
       .then(() => {
         toast.success("Please check email to verify account");
@@ -89,7 +90,6 @@ const Page = () => {
               <TextField
                 autoComplete="given-name"
                 name="first_name"
-                required
                 fullWidth
                 id="first_name"
                 label="First Name"
@@ -100,7 +100,6 @@ const Page = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
                 fullWidth
                 id="last_name"
                 label="Last Name"
@@ -108,6 +107,17 @@ const Page = () => {
                 autoComplete="family-name"
                 onChange={onChange}
                 value={last_name}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                onChange={onChange}
+                value={username}
               />
             </Grid>
             <Grid item xs={12}>
