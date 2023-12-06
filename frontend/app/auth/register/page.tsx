@@ -1,10 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useState, ChangeEvent, FormEvent } from "react";
-import { useRegisterMutation } from "@/redux/features/authApiSlice";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { useRegister } from "@/hooks";
 import { Spinner } from "@/components/common";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -37,36 +34,17 @@ const Copyright = (props: any) => {
 };
 
 const Page = () => {
-  const router = useRouter();
-  const [register, { data, error, isLoading }] = useRegisterMutation();
-
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    username: "",
-    email: "",
-    password: "",
-    re_password: "",
-  });
-
-  const { first_name, last_name, email, username, password, re_password } =
-    formData;
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    register({ first_name, last_name, username, email, password, re_password })
-      .unwrap()
-      .then(() => {
-        toast.success("Please check email to verify account");
-        router.push("/auth/login");
-      })
-      .catch(() => {
-        toast.error("Failed to register account");
-      });
-  };
+  const {
+    first_name,
+    last_name,
+    username,
+    email,
+    password,
+    re_password,
+    isLoading,
+    handleChange,
+    handleSubmit,
+  } = useRegister();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -93,7 +71,7 @@ const Page = () => {
                 fullWidth
                 id="first_name"
                 label="First Name"
-                onChange={onChange}
+                onChange={handleChange}
                 value={first_name}
                 autoFocus
               />
@@ -105,7 +83,7 @@ const Page = () => {
                 label="Last Name"
                 name="last_name"
                 autoComplete="family-name"
-                onChange={onChange}
+                onChange={handleChange}
                 value={last_name}
               />
             </Grid>
@@ -116,7 +94,7 @@ const Page = () => {
                 id="username"
                 label="Username"
                 name="username"
-                onChange={onChange}
+                onChange={handleChange}
                 value={username}
               />
             </Grid>
@@ -128,7 +106,7 @@ const Page = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={onChange}
+                onChange={handleChange}
                 value={email}
               />
             </Grid>
@@ -140,7 +118,7 @@ const Page = () => {
                 label="Password"
                 type="password"
                 id="password"
-                onChange={onChange}
+                onChange={handleChange}
                 value={password}
                 // autoComplete="new-password"
               />
@@ -153,7 +131,7 @@ const Page = () => {
                 label="Confirm Password"
                 type="password"
                 id="re_password"
-                onChange={onChange}
+                onChange={handleChange}
                 value={re_password}
               />
             </Grid>
