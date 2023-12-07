@@ -7,7 +7,12 @@ import Link from "@mui/material/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Vinyl Vault | Register",
+  description: "Vinyl Vault Register Page"
+}
 
 
 const Page = () => {
