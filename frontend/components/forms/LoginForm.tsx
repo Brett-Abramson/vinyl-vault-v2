@@ -20,6 +20,10 @@ const LoginForm = () => {
       name: "password",
       type: "password",
       value: password,
+      link: {
+        linkText: "Forgot password?",
+        linkUrl: "/password_reset/"
+      },
       required: true,
     },
   ];
@@ -27,7 +31,7 @@ const LoginForm = () => {
     <Form
       config={config}
       isLoading={isLoading}
-      btnText="Log In"
+      btnText="Sign In"
       handleChange={handleChange}
       handleSubmit={handleSubmit}
     />

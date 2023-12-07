@@ -35,7 +35,7 @@ const authApiSlice = apiSlice.injectEndpoints({
     }),
     login: builder.mutation({
       query: ({ username, password }) => ({
-        url: "/jwt/create/",
+        url: "/v1/jwt/create/",
         method: "POST",
         body: { username, password },
       }),
@@ -56,7 +56,7 @@ const authApiSlice = apiSlice.injectEndpoints({
     }),
     verify: builder.mutation({
       query: () => ({
-        url: "/jwt/verify/",
+        url: "/v1/jwt/verify/",
         method: "POST",
       }),
     }),

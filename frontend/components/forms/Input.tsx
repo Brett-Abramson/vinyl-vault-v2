@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
-import Link from "next/link";
+import NextLink from "next/link";
+import MuiLink from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -31,8 +32,15 @@ const Input = ({
   return (
     <Grid item xs={12} sm={6}>
       {link && (
-        <Box>
-          <Link href={link.linkUrl}>{link.linkText}</Link>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <MuiLink component={NextLink} href={link.linkUrl} underline="hover">
+            {link.linkText}
+          </MuiLink>
         </Box>
       )}
       <TextField

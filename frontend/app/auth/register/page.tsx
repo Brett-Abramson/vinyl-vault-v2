@@ -4,6 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import NextLink from "next/link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -11,9 +12,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Vinyl Vault | Register",
-  description: "Vinyl Vault Register Page"
-}
-
+  description: "Vinyl Vault Register Page",
+};
 
 const Page = () => {
   return (
@@ -35,7 +35,7 @@ const Page = () => {
         <RegisterForm />
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="#" variant="body2">
+            <Link component={NextLink} href="#" variant="body2">
               Already have an account? Sign in
             </Link>
           </Grid>
