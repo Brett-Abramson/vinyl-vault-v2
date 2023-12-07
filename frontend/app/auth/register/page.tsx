@@ -1,6 +1,5 @@
-"use client";
-
 import * as React from "react";
+import { RegisterForm } from "@/components/forms";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -9,23 +8,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
-const Copyright = (props: any) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        Vinyl Vault
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
+
 
 const Page = () => {
   return (
@@ -44,7 +27,7 @@ const Page = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-
+        <RegisterForm />
         <Grid container justifyContent="flex-end">
           <Grid item>
             <Link href="#" variant="body2">
@@ -53,7 +36,6 @@ const Page = () => {
           </Grid>
         </Grid>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   );
 };

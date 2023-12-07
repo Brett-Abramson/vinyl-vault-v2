@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 
 interface Props {
   labelId: string;
+  name: string;
   type: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   value: string;
@@ -24,14 +25,14 @@ const Input = ({
   return (
     <Grid item xs={12} sm={6}>
       <TextField
+        id={labelId}
         name={labelId}
         fullWidth={fullWidth}
-        id={labelId}
         label={labelId}
+        type={type}
         onChange={handleChange}
         value={value}
         required={required}
-        autoFocus
       />
     </Grid>
   );

@@ -8,6 +8,7 @@ import { Spinner } from "@/components/common";
 interface Config {
   labelText: string;
   labelId: string;
+  name: string;
   type: string;
   value: string;
   required?: boolean;
@@ -36,6 +37,7 @@ const Form = ({
           <Input
             key={input.labelId}
             labelId={input.labelId}
+            name={input.name}
             type={input.type}
             handleChange={handleChange}
             value={input.value}
