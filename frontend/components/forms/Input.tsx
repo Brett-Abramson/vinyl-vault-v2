@@ -1,6 +1,8 @@
 import { ChangeEvent } from "react";
+import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 interface Props {
   label: string;
@@ -8,9 +10,12 @@ interface Props {
   type: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   value: string;
-  children: React.ReactNode;
+  children: string;
+  link?: {
+    linkText: string;
+    linkUrl: string;
+  };
   required?: boolean;
-  fullWidth?: boolean;
 }
 
 const Input = ({
@@ -20,10 +25,16 @@ const Input = ({
   handleChange,
   value,
   children,
+  link,
   required = false,
 }: Props) => {
   return (
     <Grid item xs={12} sm={6}>
+      {link && (
+        <Box>
+          <Link href={link.linkUrl}>{link.linkText}</Link>
+        </Box>
+      )}
       <TextField
         id={name}
         name={name}
