@@ -23,13 +23,15 @@ const LoginForm = () => {
       required: true,
     },
   ];
-  <Form
-    config={config}
-    isLoading={isLoading}
-    btnText="Log In"
-    handleChange={handleChange}
-    handleSubmit={handleSubmit}
-  />;
+  return (
+    <Form
+      config={config}
+      isLoading={isLoading}
+      btnText="Log In"
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+    />
+  );
 };
 
 export default LoginForm;
