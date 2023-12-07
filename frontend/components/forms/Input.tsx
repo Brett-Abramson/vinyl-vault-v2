@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 
 interface Props {
-  labelId: string;
+  label: string;
   name: string;
   type: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -14,21 +14,22 @@ interface Props {
 }
 
 const Input = ({
-  labelId,
+  label,
+  name,
   type,
   handleChange,
   value,
   children,
   required = false,
-  fullWidth = false,
+  fullWidth = true,
 }: Props) => {
   return (
     <Grid item xs={12} sm={6}>
       <TextField
-        id={labelId}
-        name={labelId}
-        fullWidth={fullWidth}
-        label={labelId}
+        id={name}
+        name={name}
+        fullWidth
+        label={label}
         type={type}
         onChange={handleChange}
         value={value}

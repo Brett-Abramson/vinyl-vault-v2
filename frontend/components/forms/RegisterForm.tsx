@@ -1,15 +1,7 @@
 "use client";
 
 import { useRegister } from "@/hooks";
-import { Form } from "@/components/forms"
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-
+import { Form } from "@/components/forms";
 
 const RegisterForm = () => {
   const {
@@ -26,65 +18,63 @@ const RegisterForm = () => {
 
   const config = [
     {
-      labelText: "First Name",
-      labelId: "first_name",
+      label: "First Name",
+      name: "first_name",
       type: "text",
       value: first_name,
       required: false,
-      fullWidth: false
+      fullWidth: false,
     },
     {
-      labelText: "Last Name",
-      labelId: "Last Name",
+      label: "Last Name",
+      name: "last_name",
       type: "text",
       value: last_name,
       required: false,
-      fullWidth: false
+      fullWidth: false,
     },
     {
-      labelText: "Username",
-      labelId: "username",
+      label: "Username",
+      name: "username",
       type: "text",
       value: username,
       required: true,
-      fullWidth: true
+      fullWidth: true,
     },
     {
-      labelText: "Email",
-      labelId: "email",
+      label: "Email",
+      name: "email",
       type: "email",
       value: email,
       required: true,
-      fullWidth: true
+      fullWidth: true,
     },
     {
-      labelText: "Password",
-      labelId: "password",
+      label: "Password",
+      name: "password",
       type: "password",
       value: password,
       required: true,
-      fullWidth: true
+      fullWidth: true,
     },
     {
-      labelText: "Confirm Password",
-      labelId: "re_password",
+      label: "Confirm Password",
+      name: "re_password",
       type: "password",
       value: re_password,
       required: true,
-      fullWidth: true
-    }
-  ]
-
+      fullWidth: true,
+    },
+  ];
 
   return (
-     <Form 
+    <Form
       config={config}
       isLoading={isLoading}
       btnText="Sign up"
       handleChange={handleChange}
       handleSubmit={handleSubmit}
-     />
+    />
   );
 };
 export default RegisterForm;
-

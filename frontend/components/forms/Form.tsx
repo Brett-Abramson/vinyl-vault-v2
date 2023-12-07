@@ -6,8 +6,7 @@ import { Input } from "@/components/forms";
 import { Spinner } from "@/components/common";
 
 interface Config {
-  labelText: string;
-  labelId: string;
+  label: string;
   name: string;
   type: string;
   value: string;
@@ -35,8 +34,8 @@ const Form = ({
       <Grid container spacing={2}>
         {config.map((input) => (
           <Input
-            key={input.labelId}
-            labelId={input.labelId}
+            key={input.name}
+            label={input.label}
             name={input.name}
             type={input.type}
             handleChange={handleChange}
@@ -44,7 +43,7 @@ const Form = ({
             required={input.required}
             fullWidth={input.fullWidth}
           >
-            {input.labelText}
+            {input.label}
           </Input>
         ))}
       </Grid>
