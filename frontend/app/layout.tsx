@@ -4,6 +4,7 @@ import { Navbar, Footer } from "@/components/common";
 import { roboto } from "../styles/fonts";
 import "@/styles/globals.css";
 import { Setup, ThemeRegistry } from "@/components/utils";
+import Box from "@mui/material/Box";
 
 export const metadata: Metadata = {
   title: "Vinyl Vault",
@@ -22,7 +23,7 @@ export default function RootLayout({
           <Provider>
             <Setup />
             <Navbar />
-            <div>{children}</div>
+            <Box>{children}</Box>
             <Footer />
           </Provider>
         </ThemeRegistry>
