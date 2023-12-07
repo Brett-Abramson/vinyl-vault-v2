@@ -11,7 +11,6 @@ interface Config {
   type: string;
   value: string;
   required?: boolean;
-  fullWidth?: boolean;
 }
 
 interface Props {
@@ -31,7 +30,7 @@ const Form = ({
 }: Props) => {
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-      <Grid container spacing={2}>
+      <Grid container columns={1} spacing={2}>
         {config.map((input) => (
           <Input
             key={input.name}
@@ -41,7 +40,6 @@ const Form = ({
             handleChange={handleChange}
             value={input.value}
             required={input.required}
-            fullWidth={input.fullWidth}
           >
             {input.label}
           </Input>

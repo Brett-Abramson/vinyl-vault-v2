@@ -23,7 +23,6 @@ const RegisterForm = () => {
       type: "text",
       value: first_name,
       required: false,
-      fullWidth: false,
     },
     {
       label: "Last Name",
@@ -31,7 +30,6 @@ const RegisterForm = () => {
       type: "text",
       value: last_name,
       required: false,
-      fullWidth: false,
     },
     {
       label: "Username",
@@ -39,7 +37,6 @@ const RegisterForm = () => {
       type: "text",
       value: username,
       required: true,
-      fullWidth: true,
     },
     {
       label: "Email",
@@ -47,7 +44,6 @@ const RegisterForm = () => {
       type: "email",
       value: email,
       required: true,
-      fullWidth: true,
     },
     {
       label: "Password",
@@ -55,7 +51,6 @@ const RegisterForm = () => {
       type: "password",
       value: password,
       required: true,
-      fullWidth: true,
     },
     {
       label: "Confirm Password",
@@ -63,7 +58,6 @@ const RegisterForm = () => {
       type: "password",
       value: re_password,
       required: true,
-      fullWidth: true,
     },
   ];
 

@@ -21,7 +21,6 @@ const Input = ({
   value,
   children,
   required = false,
-  fullWidth = true,
 }: Props) => {
   return (
     <Grid item xs={12} sm={6}>
