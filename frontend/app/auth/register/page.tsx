@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 
 const Page = () => {
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <Box
         sx={{
           marginTop: 8,
