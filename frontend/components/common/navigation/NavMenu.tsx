@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 
 interface Props {
+  logo: string;
   pages: string[];
   anchorElNav: HTMLElement | null ;
   handleOpenNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const NavMenu = ({
+  logo,
   pages,
   anchorElNav,
   handleOpenNavMenu,
@@ -75,7 +77,7 @@ const NavMenu = ({
           textDecoration: "none",
         }}
       >
-        LOGO
+        {logo}
       </Typography>
       <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
         {pages.map((page) => (

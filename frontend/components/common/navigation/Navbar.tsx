@@ -11,8 +11,9 @@ import { NavMenu, UserMenu } from "@/components/common";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const logo = "Vinyl Vault"
 
-function Navbar() {
+const Navbar =() => {
   const {
     anchorElNav,
     anchorElUser,
@@ -44,10 +45,11 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            {logo}
           </Typography>
 
           <NavMenu 
+          logo={logo}
           pages={pages}
           anchorElNav={anchorElNav}
           handleOpenNavMenu={handleOpenNavMenu}
