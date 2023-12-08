@@ -3,8 +3,7 @@ import { LoginForm } from "@/components/forms";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import NextLink from "next/link";
+import { CustomLink } from "@/components/common";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -35,9 +34,9 @@ const Page = () => {
         <LoginForm />
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link component={NextLink} href="/auth/register/" variant="body2">
+            <CustomLink href="/auth/register/" variant="body2">
               Don&apos;t have an account?{" "}
-            </Link>
+            </CustomLink>
           </Grid>
         </Grid>
       </Box>

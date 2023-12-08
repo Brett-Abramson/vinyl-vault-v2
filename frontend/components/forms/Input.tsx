@@ -1,6 +1,5 @@
 import { ChangeEvent } from "react";
-import NextLink from "next/link";
-import MuiLink from "@mui/material/Link";
+import { CustomLink } from "@/components/common";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -38,9 +37,9 @@ const Input = ({
             justifyContent: "flex-end",
           }}
         >
-          <MuiLink component={NextLink} href={link.linkUrl} underline="hover">
+          <CustomLink href={link.linkUrl} underline="hover">
             {link.linkText}
-          </MuiLink>
+          </CustomLink>
         </Box>
       )}
       <TextField
