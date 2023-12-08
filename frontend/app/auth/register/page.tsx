@@ -34,7 +34,7 @@ const Page = () => {
         <RegisterForm />
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <CustomLink href="#" variant="body2">
+            <CustomLink href="/auth/login" variant="body2">
               Already have an account? Sign in
             </CustomLink>
           </Grid>
