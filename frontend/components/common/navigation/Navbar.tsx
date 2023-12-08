@@ -15,9 +15,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AlbumTwoToneIcon from "@mui/icons-material/AlbumTwoTone";
 import { useMenu } from "@/hooks";
-import UserMenu from "./UserMenu";
+import { UserMenu } from "@/components/common";
 
 const pages = ["Products", "Pricing", "Blog"];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
   const {
@@ -123,6 +124,7 @@ function Navbar() {
             ))}
           </Box>
           <UserMenu
+            settings={settings}
             anchorElUser={anchorElUser}
             handleOpenUserMenu={handleOpenUserMenu}
             handleCloseUserMenu={handleCloseUserMenu}

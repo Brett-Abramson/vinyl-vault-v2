@@ -7,14 +7,14 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 interface Props {
-  anchorElUser: any;
-  handleOpenUserMenu: any;
-  handleCloseUserMenu: any;
+  anchorElUser: HTMLElement | null;
+  handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  handleCloseUserMenu: () => void;
+  settings: string[];
 }
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const UserMenu = ({
+  settings,
   anchorElUser,
   handleOpenUserMenu,
   handleCloseUserMenu,
