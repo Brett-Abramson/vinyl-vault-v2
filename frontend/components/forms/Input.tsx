@@ -58,7 +58,3 @@ const Input = ({
 };
 
 export default Input;
-
-{
-  /* <Input>First Name</Input> */
-}
