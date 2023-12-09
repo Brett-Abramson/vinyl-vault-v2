@@ -57,35 +57,34 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <AlbumTwoToneIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          />
+          {/* <Logo /> */}
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+
+              flexGrow: 1,
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Vinyl Vault
+          </Typography>
           <NavMenu
             pages={pages}
             anchorElNav={anchorElNav}
             handleOpenNavMenu={handleOpenNavMenu}
             handleCloseNavMenu={handleCloseNavMenu}
           />
-          
-            <AlbumTwoToneIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
-            {/* <Logo /> */}
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
 
-                flexGrow: 1,
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Vinyl Vault
-            </Typography>
-          
           <UserMenu
             settings={settings}
             anchorElUser={anchorElUser}
