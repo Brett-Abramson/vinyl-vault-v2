@@ -2,18 +2,48 @@
 
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AlbumTwoToneIcon from "@mui/icons-material/AlbumTwoTone";
+import { useRouter } from "next/navigation";
 import { useMenu } from "@/hooks";
-import { NavMenu, UserMenu } from "@/components/common";
+import { Logo, NavMenu, UserMenu } from "@/components/common";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { useLogoutMutation } from "@/redux/features/authApiSlice";
+import { logout as setLogout } from "@/redux/features/authSlice";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const logo = "Vinyl Vault"
 
-const Navbar =() => {
+const Navbar = () => {
+  // const router = useRouter();
+  // const dispatch = useAppDispatch();
+
+  // const [logout] = useLogoutMutation();
+  // const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+  // const handleLogout = () => {
+  //   logout(undefined)
+  //     .unwrap()
+  //     .then(() => {
+  //       dispatch(setLogout());
+  //     })
+  //     .finally(() => {
+  //       router.push("/");
+  //     });
+  // };
+
+  // for these we will use { isAuthenticated ? authLinks : guestLinks } to display
+  // const authLinks = (
+
+  // )
+
+  // const guestLinks = (
+
+  //   )
+
   const {
     anchorElNav,
     anchorElUser,
@@ -27,34 +57,35 @@ const Navbar =() => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AlbumTwoToneIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          <NavMenu
+            pages={pages}
+            anchorElNav={anchorElNav}
+            handleOpenNavMenu={handleOpenNavMenu}
+            handleCloseNavMenu={handleCloseNavMenu}
           />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            {logo}
-          </Typography>
+          
+            <AlbumTwoToneIcon
+              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+            />
+            {/* <Logo /> */}
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
 
-          <NavMenu 
-          logo={logo}
-          pages={pages}
-          anchorElNav={anchorElNav}
-          handleOpenNavMenu={handleOpenNavMenu}
-          handleCloseNavMenu={handleCloseNavMenu}
-          />
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Vinyl Vault
+            </Typography>
+          
           <UserMenu
             settings={settings}
             anchorElUser={anchorElUser}
@@ -65,5 +96,5 @@ const Navbar =() => {
       </Container>
     </AppBar>
   );
-}
+};
 export default Navbar;

@@ -7,16 +7,15 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 
+
 interface Props {
-  logo: string;
   pages: string[];
-  anchorElNav: HTMLElement | null ;
+  anchorElNav: HTMLElement | null;
   handleOpenNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
   handleCloseNavMenu: () => void;
 }
 
 const NavMenu = ({
-  logo,
   pages,
   anchorElNav,
   handleOpenNavMenu,
@@ -61,24 +60,6 @@ const NavMenu = ({
         </Menu>
       </Box>
       <AlbumTwoToneIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-      <Typography
-        variant="h5"
-        noWrap
-        component="a"
-        href="#app-bar-with-responsive-menu"
-        sx={{
-          mr: 2,
-          display: { xs: "flex", md: "none" },
-          flexGrow: 1,
-          fontFamily: "monospace",
-          fontWeight: 700,
-          letterSpacing: ".3rem",
-          color: "inherit",
-          textDecoration: "none",
-        }}
-      >
-        {logo}
-      </Typography>
       <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
         {pages.map((page) => (
           <Button

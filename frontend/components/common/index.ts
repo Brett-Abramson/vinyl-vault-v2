@@ -4,3 +4,4 @@ export { default as CustomLink } from "./CustomLink";
 export { default as Navbar } from "./navigation/Navbar";
 export { default as UserMenu } from "./navigation/UserMenu";
 export { default as NavMenu } from "./navigation/NavMenu";
+export { default as Logo } from "./navigation/Logo"
