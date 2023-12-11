@@ -11,37 +11,47 @@ import { useMenu } from "@/hooks";
 import { Logo, NavMenu, UserMenu } from "@/components/common";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { useLogoutMutation } from "@/redux/features/authApiSlice";
-import { logout as setLogout } from "@/redux/features/authSlice";
+import { logout as setLogout } from "@/redux/features/authSlice"; //sets logout state to false
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
-  // const router = useRouter();
-  // const dispatch = useAppDispatch();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  // const [logout] = useLogoutMutation();
-  // const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const [logout] = useLogoutMutation();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  // const handleLogout = () => {
-  //   logout(undefined)
-  //     .unwrap()
-  //     .then(() => {
-  //       dispatch(setLogout());
-  //     })
-  //     .finally(() => {
-  //       router.push("/");
-  //     });
-  // };
+  const handleLogout = () => {
+    logout(undefined) // passing undefined to apease typescript
+      .unwrap()
+      .then(() => {
+        dispatch(setLogout());
+      })
+      .finally(() => {
+        router.push("/");
+      });
+  };
 
-  // for these we will use { isAuthenticated ? authLinks : guestLinks } to display
-  // const authLinks = (
+  
+  const authLinks = [
+    {
+      pageTitle: "Dashboard",
+      pageUrl: "/dashboard"
+    }
+  ];
 
-  // )
-
-  // const guestLinks = (
-
-  //   )
+  const guestLinks = [
+    {
+      pageTitle: "Login",
+      pageUrl: "/auth/login"
+    },
+    {
+      pageTitle: "Sign Up",
+      pageUrl: "/auth/register"
+    }
+  ];
 
   const {
     anchorElNav,
@@ -60,7 +70,7 @@ const Navbar = () => {
             <Logo />
           </Box>
           <NavMenu
-            pages={pages}
+            pages={isAuthenticated ? authLinks : guestLinks}
             anchorElNav={anchorElNav}
             handleOpenNavMenu={handleOpenNavMenu}
             handleCloseNavMenu={handleCloseNavMenu}

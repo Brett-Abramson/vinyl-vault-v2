@@ -2,13 +2,16 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import AlbumTwoToneIcon from "@mui/icons-material/AlbumTwoTone";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
+import { CustomLink } from "..";
 
 interface Props {
-  pages: string[];
+  pages: {
+    pageTitle: string;
+    pageUrl: string;
+  }[];
   anchorElNav: HTMLElement | null;
   handleOpenNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
   handleCloseNavMenu: () => void;
@@ -45,8 +48,10 @@ const NavMenu = ({
           }}
         >
           {pages.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
-              <Typography textAlign="center">{page}</Typography>
+            <MenuItem key={page.pageTitle} onClick={handleCloseNavMenu}>
+              <CustomLink href={page.pageUrl}>
+                <Typography textAlign="center">{page.pageTitle}</Typography>
+              </CustomLink>
             </MenuItem>
           ))}
         </Menu>
@@ -60,11 +65,11 @@ const NavMenu = ({
       >
         {pages.map((page) => (
           <Button
-            key={page}
+            key={page.pageTitle}
             onClick={handleCloseNavMenu}
             sx={{ my: 2, color: "white", display: "block" }}
           >
-            {page}
+            <CustomLink href={page.pageUrl}>{page.pageTitle}</CustomLink>
           </Button>
         ))}
       </Box>
