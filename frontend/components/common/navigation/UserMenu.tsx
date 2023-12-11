@@ -5,15 +5,17 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { MouseEventHandler, MouseEvent } from "react";
 import { CustomLink } from "..";
 
 interface Props {
   anchorElUser: HTMLElement | null;
   settings: {
     pageTitle: string;
-    pageUrl: string;
+    pageUrl?: string;
+    onClick?: MouseEventHandler<HTMLElement>;
   }[];
-  handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  handleOpenUserMenu: (event: MouseEvent<HTMLElement>) => void;
   handleCloseUserMenu: () => void;
 }
 
@@ -47,9 +49,17 @@ const UserMenu = ({
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting.pageTitle} onClick={handleCloseUserMenu}>
+          <MenuItem
+            key={setting.pageTitle}
+            onClick={(event) => {
+              if (setting.onClick) {
+                setting.onClick(event);
+              }
+              handleCloseUserMenu();
+            }}
+          >
             <Typography textAlign="center">
-              <CustomLink href={setting.pageUrl}>
+              <CustomLink href={setting.pageUrl} onClick={setting.onClick}>
                 {setting.pageTitle}
               </CustomLink>
             </Typography>

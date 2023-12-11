@@ -1,9 +1,8 @@
 import NextLink from "next/link";
 import MuiLink from "@mui/material/Link";
 import { TypographyProps } from "@mui/material/Typography";
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import { Button } from "@mui/material";
-
 
 interface Props {
   href?: string;
@@ -11,6 +10,7 @@ interface Props {
   variant?: TypographyProps["variant"];
   color?: TypographyProps["color"];
   children?: ReactNode;
+  onClick?: MouseEventHandler<HTMLElement>;
   [rest: string]: any;
 }
 
@@ -20,13 +20,11 @@ const CustomLink = ({
   variant = "inherit",
   color = "inherit",
   children,
+  onClick,
   ...rest
 }: Props) => {
-
   if (!href) {
-    return ( 
-    <Button onClick={rest.onClick}>{children}</Button>
-    )
+    return <Button onClick={onClick}>{children}</Button>;
   }
   return (
     <MuiLink
@@ -35,6 +33,7 @@ const CustomLink = ({
       underline={underline}
       variant={variant}
       color={color}
+      {...rest}
     >
       {children}
     </MuiLink>

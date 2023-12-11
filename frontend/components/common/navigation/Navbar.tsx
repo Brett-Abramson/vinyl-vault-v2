@@ -6,30 +6,12 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useRouter } from "next/navigation";
 import { useLogout, useMenu } from "@/hooks";
 import { Logo, NavMenu, UserMenu } from "@/components/common";
-import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { useLogoutMutation } from "@/redux/features/authApiSlice";
-import { logout as setLogout } from "@/redux/features/authSlice"; //sets logout state to false
+
 
 const Navbar = () => {
-  // const router = useRouter();
-  // const dispatch = useAppDispatch();
 
-  // const [logout] = useLogoutMutation();
-  // const { isAuthenticated } = useAppSelector((state) => state.auth);
-
-  // const handleLogout = () => {
-  //   logout(undefined) // passing undefined to apease typescript
-  //     .unwrap()
-  //     .then(() => {
-  //       dispatch(setLogout());
-  //     })
-  //     .finally(() => {
-  //       router.push("/");
-  //     });
-  // };
   const {
     anchorElNav,
     anchorElUser,
@@ -71,7 +53,6 @@ const Navbar = () => {
     },
     {
       pageTitle: "Logout",
-      pageUrl: "",
       onClick: handleLogout,
     },
   ];
