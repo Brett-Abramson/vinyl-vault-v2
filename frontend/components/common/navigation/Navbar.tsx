@@ -13,8 +13,8 @@ import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { useLogoutMutation } from "@/redux/features/authApiSlice";
 import { logout as setLogout } from "@/redux/features/authSlice"; //sets logout state to false
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+
 
 const Navbar = () => {
   const router = useRouter();
@@ -52,6 +52,28 @@ const Navbar = () => {
       pageUrl: "/auth/register"
     }
   ];
+
+  const settings = [
+    {
+      pageTitle: "Profile",
+      pageUrl: "#"
+    },
+    {
+      pageTitle: "Account",
+      pageUrl: "/"
+    },
+    {
+      pageTitle: "Dashboard",
+      pageUrl: "/dashboard"
+    },
+    {
+      pageTitle: "Logout",
+      pageUrl: "/auth/register"
+    }
+  ]
+  
+  
+  // ["Profile", "Account", "Dashboard", "Logout"];
 
   const {
     anchorElNav,
