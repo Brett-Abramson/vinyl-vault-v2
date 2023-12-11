@@ -14,7 +14,7 @@ interface Props {
 const CustomLink = ({
   href,
   underline = "hover",
-  variant = "body2",
+  variant = "inherit",
   color = "inherit",
   children,
 }: Props) => {

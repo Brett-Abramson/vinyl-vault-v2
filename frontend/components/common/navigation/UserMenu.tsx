@@ -20,7 +20,7 @@ const UserMenu = ({
   handleCloseUserMenu,
 }: Props) => {
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box sx={{ flexGrow: 0, justifySelf: "flex-end" }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />

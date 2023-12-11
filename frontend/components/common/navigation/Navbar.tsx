@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import AlbumTwoToneIcon from "@mui/icons-material/AlbumTwoTone";
 import { useRouter } from "next/navigation";
 import { useMenu } from "@/hooks";
 import { Logo, NavMenu, UserMenu } from "@/components/common";
@@ -66,7 +65,7 @@ const Navbar = () => {
             handleOpenNavMenu={handleOpenNavMenu}
             handleCloseNavMenu={handleCloseNavMenu}
           />
-          <Box display={{ xs: "flex", md: "none" }}>
+          <Box display={{ xs: "flex", md: "none" }} flexGrow={1}>
             <Logo />
           </Box>
           <UserMenu

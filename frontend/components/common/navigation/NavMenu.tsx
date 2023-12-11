@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 
-
 interface Props {
   pages: string[];
   anchorElNav: HTMLElement | null;
@@ -23,12 +22,8 @@ const NavMenu = ({
 }: Props) => {
   return (
     <>
-      <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }}}>
-        <IconButton
-          size="large"
-          onClick={handleOpenNavMenu}
-          color="inherit"
-        >
+      <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+        <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
           <MenuIcon />
         </IconButton>
         <Menu
@@ -56,7 +51,13 @@ const NavMenu = ({
           ))}
         </Menu>
       </Box>
-      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifySelf:"flex-start" }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: { xs: "none", md: "flex" },
+          justifySelf: "flex-start",
+        }}
+      >
         {pages.map((page) => (
           <Button
             key={page}
