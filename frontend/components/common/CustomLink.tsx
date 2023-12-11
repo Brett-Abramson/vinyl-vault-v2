@@ -7,13 +7,15 @@ interface Props {
   href: string;
   underline?: "none" | "hover" | "always";
   variant?: TypographyProps["variant"];
-  children: ReactNode;
+  color?: TypographyProps["color"];
+  children?: ReactNode;
 }
 
 const CustomLink = ({
   href,
   underline = "hover",
   variant = "body2",
+  color = "inherit",
   children,
 }: Props) => {
   return (
@@ -22,6 +24,7 @@ const CustomLink = ({
       href={href}
       underline={underline}
       variant={variant}
+      color={color}
     >
       {children}
     </MuiLink>

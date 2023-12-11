@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { Metadata } from "next";
+import { CustomLink } from "@/components/common";
 
 export const metadata: Metadata = {
   title: "Vinyl Vault | Home",

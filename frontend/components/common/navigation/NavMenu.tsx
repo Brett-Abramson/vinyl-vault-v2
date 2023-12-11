@@ -23,12 +23,9 @@ const NavMenu = ({
 }: Props) => {
   return (
     <>
-      <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+      <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }}}>
         <IconButton
           size="large"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
           onClick={handleOpenNavMenu}
           color="inherit"
         >
@@ -59,8 +56,7 @@ const NavMenu = ({
           ))}
         </Menu>
       </Box>
-      <AlbumTwoToneIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifySelf:"flex-start" }}>
         {pages.map((page) => (
           <Button
             key={page}

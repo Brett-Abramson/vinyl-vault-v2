@@ -8,9 +8,9 @@ import Typography from "@mui/material/Typography";
 
 interface Props {
   anchorElUser: HTMLElement | null;
+  settings: string[];
   handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
   handleCloseUserMenu: () => void;
-  settings: string[];
 }
 
 const UserMenu = ({
