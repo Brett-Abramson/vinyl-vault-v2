@@ -7,69 +7,29 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
-import { useMenu } from "@/hooks";
+import { useLogout, useMenu } from "@/hooks";
 import { Logo, NavMenu, UserMenu } from "@/components/common";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { useLogoutMutation } from "@/redux/features/authApiSlice";
 import { logout as setLogout } from "@/redux/features/authSlice"; //sets logout state to false
 
-
-
-
 const Navbar = () => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  // const router = useRouter();
+  // const dispatch = useAppDispatch();
 
-  const [logout] = useLogoutMutation();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  // const [logout] = useLogoutMutation();
+  // const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  const handleLogout = () => {
-    logout(undefined) // passing undefined to apease typescript
-      .unwrap()
-      .then(() => {
-        dispatch(setLogout());
-      })
-      .finally(() => {
-        router.push("/");
-      });
-  };
-
-  
-  const authLinks = [
-    {
-      pageTitle: "Dashboard",
-      pageUrl: "/dashboard"
-    }
-  ];
-  const guestLinks = [
-    {
-      pageTitle: "Login",
-      pageUrl: "/auth/login"
-    },
-    {
-      pageTitle: "Sign Up",
-      pageUrl: "/auth/register"
-    }
-  ];
-  const settings = [
-    {
-      pageTitle: "Profile",
-      pageUrl: "#"
-    },
-    {
-      pageTitle: "Account",
-      pageUrl: "/"
-    },
-    {
-      pageTitle: "Dashboard",
-      pageUrl: "/dashboard"
-    },
-    {
-      pageTitle: "Logout",
-      pageUrl: "/auth/register"
-    }
-  ]
-
+  // const handleLogout = () => {
+  //   logout(undefined) // passing undefined to apease typescript
+  //     .unwrap()
+  //     .then(() => {
+  //       dispatch(setLogout());
+  //     })
+  //     .finally(() => {
+  //       router.push("/");
+  //     });
+  // };
   const {
     anchorElNav,
     anchorElUser,
@@ -78,6 +38,44 @@ const Navbar = () => {
     handleCloseNavMenu,
     handleCloseUserMenu,
   } = useMenu();
+  const { handleLogout, isAuthenticated } = useLogout();
+
+  const authLinks = [
+    {
+      pageTitle: "Dashboard",
+      pageUrl: "/dashboard",
+    },
+  ];
+  const guestLinks = [
+    {
+      pageTitle: "Login",
+      pageUrl: "/auth/login",
+    },
+    {
+      pageTitle: "Sign Up",
+      pageUrl: "/auth/register",
+    },
+  ];
+  const settings = [
+    {
+      pageTitle: "Profile",
+      pageUrl: "#",
+    },
+    {
+      pageTitle: "Account",
+      pageUrl: "/",
+    },
+    {
+      pageTitle: "Dashboard",
+      pageUrl: "/dashboard",
+    },
+    {
+      pageTitle: "Logout",
+      pageUrl: "",
+      onClick: handleLogout,
+    },
+  ];
+
 
   return (
     <AppBar position="static">

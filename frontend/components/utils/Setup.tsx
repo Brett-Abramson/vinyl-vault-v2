@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useVerify } from "@/hooks";
 
 const Setup = () => {
-  useVerify();
+  useVerify(); // persists cookies 
 
   return <ToastContainer />;
 };
