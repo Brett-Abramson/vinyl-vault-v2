@@ -75,7 +75,7 @@ const Navbar = () => {
             <Logo />
           </Box>
           <UserMenu
-            settings={settings}
+            settings={isAuthenticated ? settings : guestLinks}
             anchorElUser={anchorElUser}
             handleOpenUserMenu={handleOpenUserMenu}
             handleCloseUserMenu={handleCloseUserMenu}

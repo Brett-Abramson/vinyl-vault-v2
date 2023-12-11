@@ -49,15 +49,7 @@ const UserMenu = ({
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem
-            key={setting.pageTitle}
-            onClick={(event) => {
-              if (setting.onClick) {
-                setting.onClick(event);
-              }
-              handleCloseUserMenu();
-            }}
-          >
+          <MenuItem key={setting.pageTitle} onClick={handleCloseUserMenu}>
             <Typography textAlign="center">
               <CustomLink href={setting.pageUrl} onClick={setting.onClick}>
                 {setting.pageTitle}
