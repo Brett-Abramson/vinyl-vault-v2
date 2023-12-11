@@ -41,7 +41,6 @@ const Navbar = () => {
       pageUrl: "/dashboard"
     }
   ];
-
   const guestLinks = [
     {
       pageTitle: "Login",
@@ -52,7 +51,6 @@ const Navbar = () => {
       pageUrl: "/auth/register"
     }
   ];
-
   const settings = [
     {
       pageTitle: "Profile",
@@ -71,9 +69,6 @@ const Navbar = () => {
       pageUrl: "/auth/register"
     }
   ]
-  
-  
-  // ["Profile", "Account", "Dashboard", "Logout"];
 
   const {
     anchorElNav,

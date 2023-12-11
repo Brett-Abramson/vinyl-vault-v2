@@ -1,12 +1,12 @@
 import * as React from "react";
-import { LoginForm } from "@/components/forms";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import { CustomLink } from "@/components/common";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LoginForm } from "@/components/forms";
+import { CustomLink } from "@/components/common";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
