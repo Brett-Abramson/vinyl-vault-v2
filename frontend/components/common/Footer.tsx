@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+
 
 const Copyright = (props: any) => {
   return (
@@ -10,9 +10,7 @@ const Copyright = (props: any) => {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="#">
         Vinyl Vault
-      </Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
